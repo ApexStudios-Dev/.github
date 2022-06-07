@@ -8,6 +8,6 @@
 | [![Apex (Founder & Lead Programmer)](https://avatars.githubusercontent.com/u/29412632?s=150&v=4)](https://github.com/ApexModder) | [<img height="auto" width="175" alt="FantasyGaming (Artist)" src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/profile/fantasy.png">](https://github.com/Viscerus) | [<img height="auto" width="175" alt="RudySPG (Web Developer)" src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/master/profile/rudyspg.png">](https://github.com/RudySPG) |
 |:---:|:---:|:---:|
 | [**Apex**](https://github.com/ApexModder) | [**FantasyGaming**](https://github.com/Viscerus) | [**RudySPG**](https://github.com/RudySPG) |
-| [_Founder & Lead Programmer_](https://github.com/ApexModder) | [_Artist_](https://github.com/Viscerus) | [_Web Developer_](https://github.com/RudySPG) |
+| [_Founder & Lead Programmer_](https://github.com/ApexModder) | [_Co-Founder & Artist_](https://github.com/Viscerus) | [_Web Developer_](https://github.com/RudySPG) |
 
 </div>

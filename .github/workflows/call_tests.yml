@@ -1,0 +1,102 @@
+name: CI Tests
+
+on:
+  workflow_call:
+    secrets:
+      DISCORD_CI_WEBHOOK:
+        required: true
+        description: Discord Webhook
+
+jobs:
+  # Gather variables used throughout the workflow
+  vars:
+    name: Gather workflow variables
+    runs-on: ubuntu-latest
+
+    outputs:
+      mod_name: ${{ steps.mod_name.outputs.value }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Unshallow Repository
+        run: git fetch --prune --unshallow
+
+      - name: Mod Name
+        id: mod_name
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ./gradle.properties
+          property: mod_name
+
+      - name: View Variables
+        run: |
+          echo "'mod_name': => '${{ steps.mod_name.outputs.value }}'"
+
+  # Run tests to ensure mod runs fine
+  tests:
+    name: Run CI Tests
+    runs-on: ${{ matrix.os }}
+    needs: [ vars ]
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        java: [ 17 ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          cache: gradle
+          distribution: adopt
+          java-version: ${{ matrix.java }}
+
+      - name: Give Gradle Execute Permissions
+        if: ${{ matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest' }}
+        run: chmod +x ./gradlew
+
+      - name: Execute Gradle tasks
+        id: ci_tests
+        run: ./gradlew data gameTest-Server
+
+      - name: Upload CI Test Files
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.os }}-ci_test_data
+          path: ./run/gametest-server
+
+      - name: Notify CI Test Failure
+        if: ${{ always() && (steps.ci_tests.outcome == 'failure') }}
+        uses: sarisia/actions-status-discord@v1.9.0
+        with:
+          webhook: ${{ secrets.DISCORD_CI_WEBHOOK }}
+          title: '❌️ - **${{ needs.vars.outputs.mod_name }}** - _Failed_!'
+          description: |
+            **${{ needs.vars.outputs.mod_name }}** failed to pass required CI tests!
+            **OS**: _**${{ matrix.os }}**_
+            **Java**: _**${{ matrix.java }}**_
+          color: 0x3c40c7
+          username: ApexStudios
+          avatar_url: https://i.imgur.com/NkQg4yO.png
+          nocontext: true
+
+      - name: Notify CI Test Success
+        if: ${{ always() && (steps.ci_tests.outcome == 'success') }}
+        uses: sarisia/actions-status-discord@v1.9.0
+        with:
+          webhook: ${{ secrets.DISCORD_CI_WEBHOOK }}
+          title: '✅️ - **${{ needs.vars.outputs.mod_name }}** - _Passed_!'
+          description: |
+            **${{ needs.vars.outputs.mod_name }}** passed required CI tests!
+            **OS**: _**${{ matrix.os }}**_
+            **Java**: _**${{ matrix.java }}**_
+          color: 0x3c40c7
+          username: ApexStudios
+          avatar_url: https://i.imgur.com/NkQg4yO.png
+          nocontext: true

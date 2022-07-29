@@ -1,0 +1,63 @@
+name: Compile Project
+
+on:
+  workflow_call:
+    secrets:
+      # See below to-do marker as to why these are required
+      APEX_MODS_MAVEN_USERNAME:
+        required: true
+        description: Username for our Maven Repository
+      APEX_MODS_MAVEN_PASSWORD:
+        required: true
+        description: Password for our Maven Repository
+
+jobs:
+  # Compile mod jars for publication
+  compile:
+    name: Compile mod Jars
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Download Changelog
+        uses: actions/download-artifact@v2
+        with:
+          name: changelog
+          path: .github
+
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: adopt
+          java-version: 17
+          cache: gradle
+
+      - name: Give Gradle Execute Permissions
+        run: chmod +x ./gradlew
+
+      # TODO: Figure out a way to move maven publishing to the publish job
+      # Sure we could just invoke `gradlew publish` and make use of gradles `maven-publish` task
+      # but since we would be running in a different job none of the results from the `data` & `build` tasks would exist
+      # thus we would have to regenerate and recompile the mod and slowdown the process of this workflow by quite alot
+      #
+      # Let alone ForgeGradle being involved and also slowing down gradles process with all the internal setup tasks
+      # that get fired auto-magicly
+      #
+      # We are already compiling & generating data twice throughout this workflow (once for `ci-tests` and once for `compile`)
+      # doing it all yet a third time defeats the purpose of having this whole `compile` job, supposed to be a compile once and done
+      # thing, use the download artifact action to pull in the compiled jars where ever they are needed rather then compiling new instances everytime
+      #
+      # tl;dr: Figure out someway to publish to our maven repository without using gradle [to speed up the process of this workflow] and move maven publishing into the `publish` job
+      - name: Execute Gradle tasks
+        run: ./gradlew data build publish
+        env:
+          APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
+          APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}
+
+      - name: Upload Compiled Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: ./build/libs

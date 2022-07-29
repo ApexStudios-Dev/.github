@@ -2,6 +2,11 @@ name: CI Tests
 
 on:
   workflow_call:
+    inputs:
+      notification_color:
+        required: true
+        description: Color to pass along to any Discord notifications (in hex format `0x3C40C7`)
+        type: string
     secrets:
       DISCORD_CI_WEBHOOK:
         required: true
@@ -81,7 +86,7 @@ jobs:
             **${{ needs.vars.outputs.mod_name }}** failed to pass required CI tests!
             **OS**: _**${{ matrix.os }}**_
             **Java**: _**${{ matrix.java }}**_
-          color: 0x3c40c7
+          color: ${{ github.event.inputs.notification_color }}
           username: ApexStudios
           avatar_url: https://i.imgur.com/NkQg4yO.png
           nocontext: true
@@ -96,7 +101,7 @@ jobs:
             **${{ needs.vars.outputs.mod_name }}** passed required CI tests!
             **OS**: _**${{ matrix.os }}**_
             **Java**: _**${{ matrix.java }}**_
-          color: 0x3c40c7
+          color: ${{ github.event.inputs.notification_color }}
           username: ApexStudios
           avatar_url: https://i.imgur.com/NkQg4yO.png
           nocontext: true

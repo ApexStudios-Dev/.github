@@ -1,0 +1,7 @@
+## {{.Version}}
+
+{{range .Items -}}
+* {{.Title}}{{if .IsPull}} ([contributed]({{.PullURL}}) by [{{.Author}}]({{.AuthorURL}})){{end}} \[[{{.CommitHashShort}}]({{.CommitURL}})\]
+{{end -}}
+<br>
+_For more details, see [**{{.PreviousVersion}}**..**{{.Version}}**]({{.CompareURL}})_

@@ -86,7 +86,7 @@ jobs:
             **${{ needs.vars.outputs.mod_name }}** failed to pass required CI tests!
             **OS**: _**${{ matrix.os }}**_
             **Java**: _**${{ matrix.java }}**_
-          color: ${{ github.event.inputs.notification_color }}
+          color: ${{ inputs.notification_color }}
           username: ApexStudios
           avatar_url: https://i.imgur.com/NkQg4yO.png
           nocontext: true
@@ -101,7 +101,7 @@ jobs:
             **${{ needs.vars.outputs.mod_name }}** passed required CI tests!
             **OS**: _**${{ matrix.os }}**_
             **Java**: _**${{ matrix.java }}**_
-          color: ${{ github.event.inputs.notification_color }}
+          color: ${{ inputs.notification_color }}
           username: ApexStudios
           avatar_url: https://i.imgur.com/NkQg4yO.png
           nocontext: true

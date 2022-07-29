@@ -129,13 +129,13 @@ jobs:
       - name: Publish
         uses: Kir-Antipov/mc-publish@v3.1
         with:
-#          modrinth-id: ${{ needs.vars.outputs.mod_modrinth_id }}
-#          modrinth-featured: true
-#          modrinth-unfeature: intersection
-#          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-id: ${{ needs.vars.outputs.mod_modrinth_id }}
+          modrinth-featured: true
+          modrinth-unfeature: intersection
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
-#          curseforge-id: ${{ needs.vars.outputs.mod_curseforge_id }}
-#          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          curseforge-id: ${{ needs.vars.outputs.mod_curseforge_id }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           github-tag: ${{ needs.vars.outputs.tag_current }}
           github-generate-changelog: false

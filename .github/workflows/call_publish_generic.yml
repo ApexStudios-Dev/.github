@@ -1,0 +1,119 @@
+name: Publish Project
+
+on:
+  workflow_call:
+
+jobs:
+  # Gather variables used throughout the workflow
+  vars:
+    name: Gather workflow variables
+    runs-on: ubuntu-latest
+
+    outputs:
+      mod_name: ${{ steps.mod_name.outputs.value }}
+      mod_version: ${{ steps.mod_version.outputs.value }}
+      mod_release_type: ${{ steps.mod_release_type.outputs.value }}
+      minecraft_version: ${{ steps.minecraft_version.outputs.value }}
+      tag_current: ${{ steps.tag_current.outputs.tag }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Unshallow Repository
+        run: git fetch --prune --unshallow
+
+      - name: Mod Name
+        id: mod_name
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ./gradle.properties
+          property: mod_name
+
+      - name: Mod Version
+        id: mod_version
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ./gradle.properties
+          property: mod_version
+
+      - name: Release Type
+        id: mod_release_type
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ./gradle.properties
+          property: mod_release_type
+
+      - name: Minecraft Version
+        id: minecraft_version
+        uses: christian-draeger/read-properties@1.0.1
+        with:
+          path: ./gradle.properties
+          property: minecraft_version
+
+      - name: Find Current Tag
+        id: tag_current
+        uses: jimschubert/query-tag-action@v1
+        with:
+          include: v*
+          commit-ish: '@'
+          skip-unshallow: true
+
+      - name: View Variables
+        run: |
+          echo "'mod_name': => '${{ steps.mod_name.outputs.value }}'"
+          echo "'mod_version': => '${{ steps.mod_version.outputs.value }}'"
+          echo "'mod_release_type': => '${{ steps.mod_release_type.outputs.value }}'"
+          echo "'minecraft_version': => '${{ steps.minecraft_version.outputs.value }}'"
+          echo "'tag_current': => '${{ steps.tag_current.outputs.tag }}'"
+
+  # Publish jars to various sources
+  publish:
+    name: Publish Mod
+    runs-on: ubuntu-latest
+    needs: [ vars ]
+
+    steps:
+      - name: Download Changelog
+        uses: actions/download-artifact@v2
+        with:
+          name: changelog
+          path: .github
+
+      - name: Download Compiled Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: artifacts
+          path: ./build/libs
+
+      - name: Load Changelog File
+        id: changelog
+        run: echo ::set-output name=changelog::$(cat .github/CHANGELOG.md)
+
+      - name: Publish
+        uses: Kir-Antipov/mc-publish@v3.1
+        with:
+          github-tag: ${{ needs.vars.outputs.tag_current }}
+          github-generate-changelog: false
+          github-draft: false
+          github-prerelease: false
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+          files-primary: ./build/libs/!(*-@(deobf|slim|sources|javadocs|all)).jar
+          files-secondary: ./build/libs/*-@(deobf|slim|sources|javadocs|all).jar
+
+          changelog: ${{ steps.changelog.outputs.changelog }}
+          changelog-file: ./.github/CHANGELOG.md
+
+          name: ${{ needs.vars.outputs.mod_name }} - v${{ needs.vars.outputs.mod_version }} for Minecraft ${{ needs.vars.outputs.minecraft_version }}
+          version: ${{ needs.vars.outputs.mod_version }}
+          version-type: ${{ needs.vars.outputs.mod_release_type }}
+          version-resolver: latest
+
+          loaders: forge
+          game-versions: ${{ needs.vars.outputs.minecraft_version }}
+          java: 17
+
+          retry-attempts: 2
+          retry-delay: 10000
+          fail-mode: fail

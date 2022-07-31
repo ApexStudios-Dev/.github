@@ -146,7 +146,6 @@ jobs:
           files-primary: ./build/libs/!(*-@(deobf|slim|sources|javadocs|all)).jar
           files-secondary: ./build/libs/*-@(deobf|slim|sources|javadocs|all).jar
 
-          changelog: ${{ steps.changelog.outputs.changelog }}
           changelog-file: ./.github/CHANGELOG.md
 
           name: ${{ needs.vars.outputs.mod_name }} - v${{ needs.vars.outputs.mod_version }} for Minecraft ${{ needs.vars.outputs.minecraft_version }}

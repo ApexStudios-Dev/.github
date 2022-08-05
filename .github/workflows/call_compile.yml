@@ -37,6 +37,12 @@ jobs:
       - name: Give Gradle Execute Permissions
         run: chmod +x ./gradlew
 
+      - name: Generate Asset/Data Files
+        run: ./gradlew data
+
+      - name: Compile Project Jar Files
+        run: ./gradlew build
+
       # TODO: Figure out a way to move maven publishing to the publish job
       # Sure we could just invoke `gradlew publish` and make use of gradles `maven-publish` task
       # but since we would be running in a different job none of the results from the `data` & `build` tasks would exist
@@ -50,8 +56,8 @@ jobs:
       # thing, use the download artifact action to pull in the compiled jars where ever they are needed rather then compiling new instances everytime
       #
       # tl;dr: Figure out someway to publish to our maven repository without using gradle [to speed up the process of this workflow] and move maven publishing into the `publish` job
-      - name: Execute Gradle tasks
-        run: ./gradlew data build publish
+      - name: Publish to Maven
+        run: ./gradlew publish
         env:
           APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
           APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}

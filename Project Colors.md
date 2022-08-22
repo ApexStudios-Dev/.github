@@ -7,7 +7,7 @@
 - **ItemResistance**: [<span style="color:#B50E0E">_**#B50E0E**_</span>](https://www.colorhexa.com/B50E0E) - `0xB50E0E`|`#B50E0E`
 
 ### _WIP_
-- **FantasyFurniture**: [<span style="color:#C1E1C1">_**#C1E1C1**_</span>](https://www.colorhexa.com/C1E1C1) - `0xC1E1C1`|`#C1E1C1` | _NOTE: Color is placeholder_
+- **FantasyMounts**: [<span style="color:#C1E1C1">_**#C1E1C1**_</span>](https://www.colorhexa.com/C1E1C1) - `0xC1E1C1`|`#C1E1C1` | _NOTE: Color is placeholder_
 
 ### _Deprecated / Legacy_
 - ~~_**FantasyCottage**_~~: [<span style="color:#F0D996">_**#F0D996**_</span>](https://www.colorhexa.com/F0D996) - `0xF0D996`|`#F0D996`

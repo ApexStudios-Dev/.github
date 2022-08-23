@@ -1,6 +1,6 @@
 <br>
 <div align="center">
-	<a href="https://discord.apexmods.xyz/"><img src="../assets/apexstudios/Banner.svg"></a>
+	<a href="https://discord.apexmods.xyz/"><img src="https://github.com/ApexStudios-Dev/.github/blob/master/assets/apexstudios/Banner.svg"></a>
 </div>
 <br>
 <h1 align="center">Just your average hobbyist modders & gamers.</h1>

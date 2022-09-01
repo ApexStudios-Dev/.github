@@ -14,7 +14,7 @@ body:
       description: |
         Is your feature request related to a problem? Please describe.
 
-        Please provided as many details as you can.
+        Please provide as many details as you can.
         A _step by step_ on how to reproduce the issue would also be preferred.
       placeholder: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
   - type: textarea

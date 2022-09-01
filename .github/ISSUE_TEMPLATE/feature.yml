@@ -22,7 +22,7 @@ body:
     attributes:
       label: Describe the solution you'd like?
       description: |
-        Describe the feature you would like implement here, in as much detail as you cana give.
+        Describe the feature you would like implemented here, in as much detail as you can give.
       placeholder: A clear and concise description of your feature request.
     validations:
       required: true

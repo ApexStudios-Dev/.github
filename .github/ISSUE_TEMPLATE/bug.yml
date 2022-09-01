@@ -1,9 +1,7 @@
 name: 🐞 Bug
-description: File a bug report
+description: File a bug report. [_Yes this includes crashes_]
 title: "[Bug]: "
-labels: [ "bug", "triage" ]
-assignees:
-  - octocat
+labels: [ "bug" ]
 body:
   - type: markdown
     attributes:

@@ -1,0 +1,66 @@
+name: 🐞 Bug
+description: File a bug report
+title: "[Bug]: "
+labels: [ "bug", "triage" ]
+assignees:
+  - octocat
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+        **Note:** Optifine and similar mods which mess with the core engine of Minecraft will immediately invalidate your issue.
+        If you were using any mods like this, please try and reproduce the bug without said mod[s] installed.
+        Only then should you report an issue, if the bug still arose without said mod[s] installed.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: |
+        Also tell us, what did you expect to happen?
+
+        Please provided as many details as you can.
+        A _step by step_ on how to reproduce the issue would also be preferred.
+      placeholder: Tell us what you see!
+      value: "A bug happened!"
+    validations:
+      required: true
+  - type: input
+    id: minecraft-version
+    attributes:
+      label: Minecraft Version
+      description: |
+        Which Minecraft version were you running?
+        _`latest`_ - Is not allowed, please enter the exact Minecraft version number
+      placeholder: '1.19.2'
+    validations:
+      required: true
+  - type: input
+    id: forge-version
+    attributes:
+      label: MinecraftForge Version
+      description: |
+        Which MinecraftForge version were you running?
+        `latest` - Is not allowed, please enter the exact MinecraftForge version number [_Excluding the Minecraft version_]
+        _`1.19.2-43.1.0` - This would be `43.1.0`_
+      placeholder: '43.1.0'
+    validations:
+      required: true
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod Version
+      description: |
+        Which version of our mod were you running?
+        `latest` - Is not allowed, please enter the exact version number [_Excluding the Minecraft version_]
+        _`1.19.2-1.0.0` - This would be `1.0.0`_
+      placeholder: '1.0.0'
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell

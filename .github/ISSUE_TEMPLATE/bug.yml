@@ -1,6 +1,6 @@
-name: 🐞 Bug
-description: File a bug report. [_Yes this includes crashes_]
-title: "[Bug]: "
+name: 🐞 Bug or Crash
+description: File a bug or crash report.
+title: "[Bug/Crash] "
 labels: [ "bug" ]
 body:
   - type: markdown
@@ -31,7 +31,7 @@ body:
       description: |
         Which Minecraft version were you running?
         _`latest`_ - Is not allowed, please enter the exact Minecraft version number
-      placeholder: '1.19.2'
+      placeholder: "1.19.2"
     validations:
       required: true
   - type: input
@@ -42,7 +42,7 @@ body:
         Which MinecraftForge version were you running?
         `latest` - Is not allowed, please enter the exact MinecraftForge version number [_Excluding the Minecraft version_]
         _`1.19.2-43.1.0` - This would be `43.1.0`_
-      placeholder: '43.1.0'
+      placeholder: "43.1.0"
     validations:
       required: true
   - type: input
@@ -53,7 +53,7 @@ body:
         Which version of our mod were you running?
         `latest` - Is not allowed, please enter the exact version number [_Excluding the Minecraft version_]
         _`1.19.2-1.0.0` - This would be `1.0.0`_
-      placeholder: '1.0.0'
+      placeholder: "1.0.0"
     validations:
       required: true
   - type: textarea

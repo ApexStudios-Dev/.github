@@ -7,6 +7,7 @@
 - **ItemResistance**: [<span style="color:#B50E0E">_**#B50E0E**_</span>](https://www.colorhexa.com/B50E0E) - `0xB50E0E`|`#B50E0E`
 
 ### _WIP_
+- **FantasyBestiary**: [<spam style="color:#836953">_**#836953**_</span>](https://www.colorhexa.com/836953) - `0x836953` | `#836953`
 - **FantasyMounts**: [<span style="color:#C1E1C1">_**#C1E1C1**_</span>](https://www.colorhexa.com/C1E1C1) - `0xC1E1C1`|`#C1E1C1` | _NOTE: Color is placeholder_
 
 ### _Deprecated / Legacy_

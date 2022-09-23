@@ -38,10 +38,10 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Generate Asset/Data Files
-        run: ./gradlew data
+        run: ./gradlew data --no-daemon
 
       - name: Compile Project Jar Files
-        run: ./gradlew build
+        run: ./gradlew build --no-daemon
 
       # TODO: Figure out a way to move maven publishing to the publish job
       # Sure we could just invoke `gradlew publish` and make use of gradles `maven-publish` task
@@ -57,7 +57,7 @@ jobs:
       #
       # tl;dr: Figure out someway to publish to our maven repository without using gradle [to speed up the process of this workflow] and move maven publishing into the `publish` job
       - name: Publish to Maven
-        run: ./gradlew publish
+        run: ./gradlew publish --no-daemon
         env:
           APEX_MODS_MAVEN_USERNAME: ${{ secrets.APEX_MODS_MAVEN_USERNAME }}
           APEX_MODS_MAVEN_PASSWORD: ${{ secrets.APEX_MODS_MAVEN_PASSWORD }}

@@ -67,7 +67,7 @@ jobs:
 
       - name: Execute Gradle tasks
         id: ci_tests
-        run: ./gradlew data gameTest-Server
+        run: ./gradlew data gameTest-Server --no-daemon
 
       - name: Upload CI Test Files
         if: always()

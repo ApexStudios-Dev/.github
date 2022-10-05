@@ -86,5 +86,5 @@ _**Fantasy's Furniture Mod for Minecraft 1.16.5**_
 
 ## _25% off when using code: **ApexStudios**_
 
-<a href="https://www.bisecthosting.com/apexstudios"><img src="https://github.com/ApexStudios-Dev/.github/blob/master/assets/third_party/bisect_hosting.png?raw=true"></a>
+<a href="https://www.bisecthosting.com/apexstudios"><img src="https://github.com/ApexStudios-Dev/.github/blob/master/assets/third_party/bisect_hosting.png?raw=true" width="381" height="117" /></a>
 </center>

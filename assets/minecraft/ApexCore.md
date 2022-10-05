@@ -48,5 +48,5 @@ You download this mod on either [_**Modrinth**_](https://modrinth.com/mod/apexco
 
 ## _25% off when using code: **ApexStudios**_
 
-<a href="https://www.bisecthosting.com/apexstudios"><img src="https://github.com/ApexStudios-Dev/.github/blob/master/assets/third_party/bisect_hosting.png?raw=true"></a>
+<a href="https://www.bisecthosting.com/apexstudios"><img src="https://github.com/ApexStudios-Dev/.github/blob/master/assets/third_party/bisect_hosting.png?raw=true" width="381" height="117" /></a>
 </center>

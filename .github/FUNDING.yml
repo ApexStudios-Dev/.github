@@ -11,7 +11,7 @@
 # lfx_crowdfunding: # Replace with a single LFX Crowdfunding project-name e.g., cloud-foundry
 # custom: # Replace with up to 4 custom sponsorship URLs e.g., ['link1', 'link2']
 
-open_collective: ApexStudios
+# open_collective: ApexStudios
 patreon: ApexStudios
-custom: [ 'https://www.paypal.me/robsonlawson', 'https://www.paypal.me/peytonh20' ]
+# custom: [ 'https://www.paypal.me/robsonlawson', 'https://www.paypal.me/peytonh20' ]
 github: [ 'ApexModder' ]

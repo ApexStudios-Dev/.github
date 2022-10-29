@@ -11,123 +11,50 @@ on:
       CURSEFORGE_TOKEN:
         required: true
         description: Auth token used to publish to CurseForge
+    inputs:
+      mod_name:
+        type: string
+        required: true
+      mod_version:
+        type: string
+        required: true
+      mod_curseforge_id:
+        type: string
+        required: true
+      mod_modrinth_id:
+        type: string
+        required: true
+      mod_release_type:
+        type: string
+        required: true
+      minecraft_version:
+        type: string
+        required: true
+      tag_current:
+        type: string
+        required: true
 
 jobs:
-  # Gather variables used throughout the workflow
-  vars:
-    name: Gather workflow variables
-    runs-on: ubuntu-latest
-
-    outputs:
-      mod_name: ${{ steps.mod_name.outputs.value }}
-      mod_version: ${{ steps.mod_version.outputs.value }}
-      mod_curseforge_id: ${{ steps.mod_curseforge_id.outputs.value }}
-      mod_modrinth_id: ${{ steps.mod_modrinth_id.outputs.value }}
-      mod_release_type: ${{ steps.mod_release_type.outputs.value }}
-      minecraft_version: ${{ steps.minecraft_version.outputs.value }}
-      forge_version: ${{ steps.forge_version.outputs.value }}
-      tag_current: ${{ steps.tag_current.outputs.tag }}
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Unshallow Repository
-        run: git fetch --prune --unshallow
-
-      - name: Mod Name
-        id: mod_name
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: ./gradle.properties
-          property: mod_name
-
-      - name: Mod Version
-        id: mod_version
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: ./gradle.properties
-          property: mod_version
-
-      - name: CurseForge ID
-        id: mod_curseforge_id
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: ./gradle.properties
-          property: mod_curseforge_id
-
-      - name: Modrinth ID
-        id: mod_modrinth_id
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: ./gradle.properties
-          property: mod_modrinth_id
-
-      - name: Release Type
-        id: mod_release_type
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: ./gradle.properties
-          property: mod_release_type
-
-      - name: Minecraft Version
-        id: minecraft_version
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: ./gradle.properties
-          property: minecraft_version
-
-      - name: Forge Version
-        id: forge_version
-        uses: christian-draeger/read-properties@1.0.1
-        with:
-          path: ./gradle.properties
-          property: forge_version
-
-      - name: Find Current Tag
-        id: tag_current
-        uses: jimschubert/query-tag-action@v1
-        with:
-          include: v*
-          commit-ish: '@'
-          skip-unshallow: true
-
-      - name: View Variables
-        run: |
-          echo "'mod_name': => '${{ steps.mod_name.outputs.value }}'"
-          echo "'mod_version': => '${{ steps.mod_version.outputs.value }}'"
-          echo "'mod_curseforge_id': => '${{ steps.mod_curseforge_id.outputs.value }}'"
-          echo "'mod_modrinth_id': => '${{ steps.mod_modrinth_id.outputs.value }}'"
-          echo "'mod_release_type': => '${{ steps.mod_release_type.outputs.value }}'"
-          echo "'minecraft_version': => '${{ steps.minecraft_version.outputs.value }}'"
-          echo "'forge_version': => '${{ steps.forge_version.outputs.value }}'"
-          echo "'tag_current': => '${{ steps.tag_current.outputs.tag }}'"
-
   # Publish jars to various sources
   publish:
     name: Publish Mod
     runs-on: ubuntu-latest
-    needs: [ vars ]
 
     steps:
       - name: Download Changelog
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: changelog
           path: .github
 
       - name: Download Compiled Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: artifacts
           path: ./build/libs
 
-      - name: Load Changelog File
-        id: changelog
-        run: echo ::set-output name=changelog::$(cat .github/CHANGELOG.md)
-
       - name: Publish
-        uses: Kir-Antipov/mc-publish@v3.1
+        uses: Kir-Antipov/mc-publish@v3.2
         with:
           modrinth-id: ${{ needs.vars.outputs.mod_modrinth_id }}
           modrinth-featured: true
@@ -137,7 +64,7 @@ jobs:
           curseforge-id: ${{ needs.vars.outputs.mod_curseforge_id }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
-          github-tag: ${{ needs.vars.outputs.tag_current }}
+          github-tag: ${{ inputs.tag_current }}
           github-generate-changelog: false
           github-draft: false
           github-prerelease: false
@@ -148,13 +75,13 @@ jobs:
 
           changelog-file: ./.github/CHANGELOG.md
 
-          name: ${{ needs.vars.outputs.mod_name }} - v${{ needs.vars.outputs.mod_version }} for Minecraft ${{ needs.vars.outputs.minecraft_version }}
-          version: ${{ needs.vars.outputs.mod_version }}
-          version-type: ${{ needs.vars.outputs.mod_release_type }}
+          name: ${{ inputs.mod_name }} - v${{ inputs.mod_version }} for Minecraft ${{ inputs.minecraft_version }}
+          version: ${{ inputs.mod_version }}
+          version-type: ${{ inputs.mod_release_type }}
           version-resolver: latest
 
           loaders: forge
-          game-versions: ${{ needs.vars.outputs.minecraft_version }}
+          game-versions: ${{ inputs.minecraft_version }}
           java: 17
 
           retry-attempts: 2

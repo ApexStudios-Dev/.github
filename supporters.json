@@ -1,0 +1,20 @@
+{
+	"43fd393b-879d-45ec-b2d5-ce8c4688ab66": [ // ApexSPG
+		"founder",
+		"alpha_tester",
+		"beta_tester"
+	],
+	"598535bd-f330-4123-b4d0-c6e618390477": [ // FantasyGaming
+		"co_founder",
+		"alpha_tester",
+		"beta_tester"
+	],
+	"16d60e4e-53ba-4288-8062-ca1ea074b501": [ // RudySPG
+		"alpha_tester",
+		"beta_tester"
+	],
+	"ae3f6ca6-b28c-479b-9c97-4be7df600041": [ // TroublesomeTobi
+		"alpha_tester",
+		"beta_tester"
+	]
+}

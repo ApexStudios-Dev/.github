@@ -51,7 +51,7 @@ jobs:
             - name: Setup Gradle
               uses: gradle/actions/setup-gradle@v4
               with:
-                  cache-disabled: true
+                  cache-disabled: ${{ ! env.ACT }}
 
             - name: Mark Gradle as Executable
               run: chmod +x ./gradlew
@@ -78,7 +78,7 @@ jobs:
             - name: Setup Gradle
               uses: gradle/actions/setup-gradle@v4
               with:
-                  cache-disabled: true
+                  cache-disabled: ${{ ! env.ACT }}
 
             - name: Mark Gradle as Executable
               run: chmod +x ./gradlew

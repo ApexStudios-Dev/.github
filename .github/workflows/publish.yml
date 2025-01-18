@@ -3,11 +3,9 @@ on:
         inputs:
             java_version:
                 type: string
-                required: true
                 default: 17
             java_vendor:
                 type: string
-                required: true
                 default: temurin
         secrets:
             MAVEN_USERNAME:

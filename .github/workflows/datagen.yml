@@ -1,0 +1,36 @@
+on:
+    workflow_call:
+        inputs:
+            java_version:
+                type: string
+                required: true
+                default: 17
+            java_vendor:
+                type: string
+                required: true
+                default: temurin
+
+jobs:
+    datagen:
+        name: Data Gen
+        runs-on: apexstudios
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  distribution: ${{ inputs.java_vendor }}
+                  java-version: ${{ inputs.java_version }}
+
+            - name: Setup Gradle
+              uses: gradle/actions/setup-gradle@v4
+              with:
+                  cache-disabled: true
+
+            - name: Mark Gradle as Executable
+              run: chmod +x ./gradlew
+
+            - name: Test
+              run: ./gradlew :runData

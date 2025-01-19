@@ -1,0 +1,64 @@
+on:
+    workflow_call:
+        inputs:
+            java_version:
+                type: string
+                default: 17
+            java_vendor:
+                type: string
+                default: temurin
+
+jobs:
+    vars:
+        name: Get Variables
+        runs-on: apexstudios
+        outputs:
+            version: ${{ steps.version.outputs.version }}
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+                fetch-tags: true
+
+            - name: Determine version
+              uses: paulhatch/semantic-version@v5.4.0
+              id: version
+              with:
+                change_path: "./"
+                version_format: "${major}.${minor}.${patch}"
+                search_commit_body: true
+                bump_each_commit: true
+
+    build-prs:
+        name: Build PR - ${{ github.event.pull_request.number }}
+        needs: [ vars ]
+        runs-on: apexstudios
+        env:
+            VERSION: ${{ needs.vars.outputs.version }}-${{ github.event.pull_request.number }}
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+                fetch-tags: true
+
+            - name: Create branch for PR
+              run: git switch -C pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.ref }}
+
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  distribution: ${{ inputs.java_vendor }}
+                  java-version: ${{ inputs.java_version }}
+
+            - name: Setup Gradle
+              uses: gradle/actions/setup-gradle@v4
+              with:
+                  cache-disabled: ${{ ! env.ACT }}
+
+            - name: Mark Gradle as Executable
+              run: chmod +x ./gradlew
+
+            - name: Build
+              run: ./gradlew :build

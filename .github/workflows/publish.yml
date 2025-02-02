@@ -12,6 +12,12 @@ on:
                 required: true
             MAVEN_PASSWORD:
                 required: true
+            CURSEFORGE_TOKEN:
+                required: true
+            MODRINTH_TOKEN:
+                required: true
+            DISCORD_WEBHOOK_URL:
+                required: true
 
 jobs:
     vars:
@@ -88,7 +94,10 @@ jobs:
 
             - name: Publish
               if: ${{ ! env.ACT }}
-              run: ./gradlew :publish
+              run: ./gradlew :publish :publishMods
               env:
                   MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
                   MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+                  CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+                  MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+                  DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}

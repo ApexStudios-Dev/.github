@@ -60,7 +60,7 @@ jobs:
               run: chmod +x ./gradlew
 
             - name: Test
-              run: ./gradlew :immaculateCheck
+              run: ./gradlew :immaculateCheck --refresh-dependencies
 
     publish:
         name: Publish - ${{ needs.vars.outputs.version }}

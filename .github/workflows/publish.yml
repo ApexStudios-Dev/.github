@@ -14,8 +14,8 @@ on:
                 required: true
             CURSEFORGE_TOKEN:
                 required: true
-            MODRINTH_TOKEN:
-                required: true
+#            MODRINTH_TOKEN:
+#                required: true
             DISCORD_WEBHOOK_URL:
                 required: true
 
@@ -72,6 +72,8 @@ jobs:
         name: Publish - ${{ needs.vars.outputs.version }}
         needs: [ vars, test ]
         runs-on: apexstudios
+        outputs:
+            ARTIFACT_PATH: ${{ steps. }}
         env:
             VERSION: ${{ needs.vars.outputs.version }}
         steps:
@@ -99,5 +101,5 @@ jobs:
                   MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
                   MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
                   CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
-                  MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+#                  MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
                   DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}

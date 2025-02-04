@@ -72,8 +72,6 @@ jobs:
         name: Publish - ${{ needs.vars.outputs.version }}
         needs: [ vars, test ]
         runs-on: apexstudios
-        outputs:
-            ARTIFACT_PATH: ${{ steps. }}
         env:
             VERSION: ${{ needs.vars.outputs.version }}
         steps:

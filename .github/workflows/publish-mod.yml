@@ -25,9 +25,6 @@ on:
             color:
                 type: string
                 required: true
-            github_package_url:
-                type: string
-                required: true
 
 jobs:
     get-vars:
@@ -79,7 +76,6 @@ jobs:
             java_version: ${{ inputs.java_version }}
             java_vendor: ${{ inputs.java_vendor }}
             version: ${{ needs.get-vars.outputs.version }}
-            github_package_url: ${{ inputs.github_package_url }}
 
     publish-curseforge:
 #        needs: [ get-vars, test, build ]

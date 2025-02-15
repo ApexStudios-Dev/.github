@@ -111,8 +111,6 @@ jobs:
         secrets: inherit
         with:
             version: ${{ needs.get-vars.outputs.version }}
-            minecraft_version: ${{ needs.get-vars.outputs.minecraft_version }}
-            neoforge_version: ${{ needs.get-vars.outputs.neoforge_version }}
             name: ${{ inputs.name }}
             logo: ${{ inputs.logo }}
             color: ${{ inputs.color }}

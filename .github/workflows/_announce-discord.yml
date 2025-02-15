@@ -1,15 +1,6 @@
 on:
     workflow_call:
         inputs:
-            minecraft_version:
-                type: string
-                required: true
-            neoforge_version:
-                type: string
-                required: true
-            apexcore_version:
-                type: string
-                required: true
             version:
                 type: string
                 required: true
@@ -34,30 +25,8 @@ jobs:
                       "content": "",
                       "embeds": [
                           {
-                              "id": 467491542,
-                              "description": " ",
-                              "fields": [
-                                  {
-                                      "id": 705813478,
-                                      "name": "<:minecraft:1087669093974421544> Minecraft",
-                                      "value": "${{ inputs.minecraft_version }}",
-                                      "inline": true
-                                  },
-                                  {
-                                      "id": 635472545,
-                                      "name": "<:neoforge:1138457156757241918> NeoForge",
-                                      "value": "${{ inputs.neoforge_version }}",
-                                      "inline": true
-                                  },
-                                  {
-                                      "id": 922175160,
-                                      "name": "<:apexcore:963684084448653332> ApexCore",
-                                      "value": "${{ inputs.apexcore_version }}",
-                                      "inline": true
-                                  }
-                              ],
                               "author": { "name": "${{ inputs.name }}" },
-                              "title": "ApexCore updated to v${{ inputs.version }}!",
+                              "title": "${{ inputs.name }} updated to v${{ inputs.version }}!",
                               "footer": {
                                   "text": "ApexStudios",
                                   "icon_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png"

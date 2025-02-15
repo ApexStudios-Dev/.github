@@ -20,20 +20,27 @@ jobs:
         runs-on: apexstudios
         steps:
             - name: Announce to Discord
+              env:
+                  MOD_NAME: ${{ inputs.name }}
               run: |
-                  curl -H "Content-Type: application/json" -X POST -d '{
-                  "content": "",
-                  "embeds": [
-                      {
-                          "title": "${{ inputs.name }} updated to v${{ inputs.version }}!",
-                          "footer": {
-                              "text": "ApexStudios",
-                              "icon_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png"
-                          },
-                          "thumbnail": { "url": "${{ inputs.logo }}" },
-                          "color": ${{ inputs.color }}
-                      }
-                  ],
-                  "username": "ApexStudios",
-                  "avatar_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png"
-                  }' "https://discord.com/api/webhooks/1340365702191775816/IP5VcQ2G95SSoYvR0IQTJkmKqICqJUwMoVxkFzvFVAEIHYCMO4T0wBzW_WMFWpdrzXKR"
+                JSON=$(cat <<EOF
+                {
+                    "content": "",
+                    "embeds": [
+                        {
+                            "title": "${{ env.MOD_NAME }} updated to v${{ inputs.version }}!",
+                            "footer": {
+                            "text": "ApexStudios",
+                            "icon_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png"
+                        },
+                        "thumbnail": { "url": "${{ inputs.logo }}" },
+                        "color": ${{ inputs.color }}
+                        }
+                    ],
+                    "username": "ApexStudios",
+                    "avatar_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png"
+                }
+                EOF
+                )
+                  
+                curl -X POST "https://discord.com/api/webhooks/1340365702191775816/IP5VcQ2G95SSoYvR0IQTJkmKqICqJUwMoVxkFzvFVAEIHYCMO4T0wBzW_WMFWpdrzXKR" -H "Content-Type: application/json" -H "Accept: application/json" -d "$JSON"

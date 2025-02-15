@@ -34,7 +34,7 @@ jobs:
             - name: Publish CurseForge
               uses: Kir-Antipov/mc-publish@v3.3
               with:
-                  curseforge-id: ${{ inputs.curseforge_id }}
+                  curseforge-id: 835372
                   curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
                   version: ${{ inputs.version }}

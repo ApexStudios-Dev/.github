@@ -34,7 +34,7 @@ jobs:
             - name: Publish Modrinth
               uses: Kir-Antipov/mc-publish@v3.3
               with:
-                  modrinth-id: ${{ inputs.modrinth_id }}
+                  modrinth-id: EjjiYArZ
                   modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
                   version: ${{ inputs.version }}

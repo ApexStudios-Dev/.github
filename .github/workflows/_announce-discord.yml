@@ -38,5 +38,5 @@ jobs:
                       ],
                       "username": "ApexStudios",
                       "avatar_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png"
-                  }' ${{ secrets.DISCORD_WEBHOOK_URL }})
+                  }' ${{ https://discord.com/api/webhooks/980083826959188000/qIurcFqZM7xGXzKt_9pPcO2HLKFzK4xeI5hBxghaUdtXTCbALZgBLhpuoTeYE1dcm43s }})
                   echo "Discord WebHook response: $RESPONSE"

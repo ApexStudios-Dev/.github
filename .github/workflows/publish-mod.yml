@@ -107,7 +107,8 @@ jobs:
 
     announce-discord:
         # needs: [ get-vars, publish-maven, publish-curseforge, publish-modrinth ]
-        needs: [ get-vars, publish-maven, publish-curseforge ]
+        # needs: [ get-vars, publish-maven, publish-curseforge ]
+        needs: [ get-vars, publish-curseforge ]
         if: success()
         uses: ApexStudios-Dev/.github/.github/workflows/_announce-discord.yml@master
         secrets: inherit

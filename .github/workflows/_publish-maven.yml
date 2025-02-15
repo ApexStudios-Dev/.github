@@ -33,7 +33,7 @@ jobs:
             - name: Mark Gradle as Executable
               run: chmod +x ./gradlew
 
-            - name: Build
+            - name: Publish Maven
               if: ${{ ! env.ACT }}
               run: ./gradlew :publish
               env:

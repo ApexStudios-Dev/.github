@@ -1,0 +1,64 @@
+on:
+    workflow_call:
+        inputs:
+            java_version:
+                type: string
+                default: 17
+            java_vendor:
+                type: string
+                default: temurin
+            github_package_url:
+                type: string
+                required: true
+
+jobs:
+    get-vars:
+        name: Get Variables
+        runs-on: apexstudios
+        outputs:
+            version: ${{ steps.version.outputs.version }}
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+                fetch-tags: true
+
+            - name: Determine version
+              uses: paulhatch/semantic-version@v5.4.0
+              id: version
+              with:
+                change_path: "./"
+                version_format: "${major}.${minor}-SNAPSHOT"
+                search_commit_body: true
+                bump_each_commit: true
+
+#    test:
+#         needs: [ get-vars ]
+#         uses: ApexStudios-Dev/.github/.github/workflows/_test.yml@master
+#         secrets: inherit
+#         with:
+#             java_version: ${{ inputs.java_version }}
+#             java_vendor: ${{ inputs.java_vendor }}
+#             version: ${{ needs.get-vars.outputs.version }}
+
+    build:
+         needs: [ get-vars ]
+         uses: ApexStudios-Dev/.github/.github/workflows/_build.yml@master
+         secrets: inherit
+         with:
+             java_version: ${{ inputs.java_version }}
+             java_vendor: ${{ inputs.java_vendor }}
+             version: ${{ needs.get-vars.outputs.version }}
+
+    publish-maven:
+#        needs: [ get-vars, test, build ]
+        needs: [ get-vars, build ]
+        if: success()
+        uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+        secrets: inherit
+        with:
+            java_version: ${{ inputs.java_version }}
+            java_vendor: ${{ inputs.java_vendor }}
+            version: ${{ needs.get-vars.outputs.version }}
+            github_package_url: ${{ inputs.github_package_url }}

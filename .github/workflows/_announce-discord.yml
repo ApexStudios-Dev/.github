@@ -43,4 +43,4 @@ jobs:
                 EOF
                 )
                   
-                curl -X POST "https://discord.com/api/webhooks/1340365702191775816/IP5VcQ2G95SSoYvR0IQTJkmKqICqJUwMoVxkFzvFVAEIHYCMO4T0wBzW_WMFWpdrzXKR" -H "Content-Type: application/json" -H "Accept: application/json" -d "$JSON"
+                curl -X POST "${{ secrets.DISCORD_WEBHOOK_URL }}" -H "Content-Type: application/json" -H "Accept: application/json" -d "$JSON"

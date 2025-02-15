@@ -66,19 +66,17 @@ jobs:
              java_vendor: ${{ inputs.java_vendor }}
              version: ${{ needs.get-vars.outputs.version }}
 
-#    publish-maven:
-##        needs: [ get-vars, test, build ]
-#        needs: [ get-vars, build ]
-#        if: success()
-#        uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
-#        secrets: inherit
-#        with:
-#            java_version: ${{ inputs.java_version }}
-#            java_vendor: ${{ inputs.java_vendor }}
-#            version: ${{ needs.get-vars.outputs.version }}
+    publish-maven:
+        needs: [ get-vars, build ]
+        if: success()
+        uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+        secrets: inherit
+        with:
+            java_version: ${{ inputs.java_version }}
+            java_vendor: ${{ inputs.java_vendor }}
+            version: ${{ needs.get-vars.outputs.version }}
 
     publish-curseforge:
-#        needs: [ get-vars, test, build ]
         needs: [ get-vars, build ]
         if: success()
         uses: ApexStudios-Dev/.github/.github/workflows/_publish-curseforge.yml@master
@@ -92,7 +90,6 @@ jobs:
             name: ${{ inputs.name }}
 
 #    publish-modrinth:
-##        needs: [ get-vars, test, build ]
 #        needs: [ get-vars, build ]
 #        if: success()
 #        uses: ApexStudios-Dev/.github/.github/workflows/_publish-modrinth.yml@master
@@ -106,8 +103,7 @@ jobs:
 #            name: ${{ inputs.name }}
 
     announce-discord:
-        # needs: [ get-vars, publish-maven, publish-curseforge, publish-modrinth ]
-        # needs: [ get-vars, publish-maven, publish-curseforge ]
+        # needs: [ get-vars, publish-curseforge, publish-modrinth ]
         needs: [ get-vars, publish-curseforge ]
         if: success()
         uses: ApexStudios-Dev/.github/.github/workflows/_announce-discord.yml@master

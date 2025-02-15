@@ -19,17 +19,23 @@ on:
             release_type:
                 type: string
                 required: true
+            name:
+                type: string
+                required: true
 
 jobs:
     publish-curseforge:
         name: Publish CurseForge - v${{ inputs.version }}
         runs-on: apexstudios
         steps:
+            - name: Delete old artifacts dir
+              run: rm -rf ./build/curseforge-libs/
+
             - name: Download Artifacts
               uses: actions/download-artifact@v4
               with:
                   name: ${{ inputs.artifact_id }}
-                  path: ./build/libs/
+                  path: ./build/curseforge-libs/
 
             - name: Publish CurseForge
               uses: Kir-Antipov/mc-publish@v3.3
@@ -37,7 +43,10 @@ jobs:
                   curseforge-id: 835372
                   curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
+                  files: ./build/libs/*[!(sources|data)].jar
+                  name: ${{ inputs.name }}-${{ inputs.version }}
                   version: ${{ inputs.version }}
                   version-type: ${{ inputs.release_type }}
-                  java: ${{ inputs.java_version }}
+                  changelog: ""
                   loaders: neoforge
+                  java: ${{ inputs.java_version }}

@@ -89,6 +89,7 @@ jobs:
             version: ${{ needs.get-vars.outputs.version }}
             curseforge_id: ${{ inputs.curseforge_id }}
             release_type: ${{ inputs.release_type }}
+            name: ${{ inputs.name }}
 
 #    publish-modrinth:
 ##        needs: [ get-vars, test, build ]
@@ -102,6 +103,7 @@ jobs:
 #            version: ${{ needs.get-vars.outputs.version }}
 #            modrinth_id: ${{ inputs.modrinth_id }}
 #            release_type: ${{ inputs.release_type }}
+#            name: ${{ inputs.name }}
 
 #    announce-discord:
 #        # needs: [ get-vars, publish-maven, publish-curseforge, publish-modrinth ]

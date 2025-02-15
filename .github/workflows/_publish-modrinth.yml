@@ -25,11 +25,14 @@ jobs:
         name: Publish Modrinth - v${{ inputs.version }}
         runs-on: apexstudios
         steps:
+            - name: Delete old artifacts dir
+              run: rm -rf ./build/modrinth-libs/
+
             - name: Download Artifacts
               uses: actions/download-artifact@v4
               with:
                   name: ${{ inputs.artifact_id }}
-                  path: ./build/libs/
+                  path: ./build/modrinth-libs/
 
             - name: Publish Modrinth
               uses: Kir-Antipov/mc-publish@v3.3
@@ -37,7 +40,10 @@ jobs:
                   modrinth-id: EjjiYArZ
                   modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
+                  files: ./build/libs/*[!(sources|data)].jar
+                  name: ${{ inputs.name }}-${{ inputs.version }}
                   version: ${{ inputs.version }}
                   version-type: ${{ inputs.release_type }}
-                  java: ${{ inputs.java_version }}
+                  changelog: ""
                   loaders: neoforge
+                  java: ${{ inputs.java_version }}

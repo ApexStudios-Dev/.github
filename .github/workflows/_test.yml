@@ -1,0 +1,62 @@
+on:
+    workflow_call:
+        inputs:
+            java_version:
+                type: string
+                required: true
+            java_vendor:
+                type: string
+                required: true
+            version:
+                type: string
+                required: true
+
+jobs:
+    tests:
+        name: Run Tests - v${{ inputs.version }}
+        runs-on: apexstudios
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Java
+              uses: actions/setup-java@v4
+              with:
+                  distribution: ${{ inputs.java_vendor }}
+                  java-version: ${{ inputs.java_version }}
+
+            - name: Setup Gradle
+              uses: gradle/actions/setup-gradle@v4
+              with:
+                  cache-disabled: ${{ ! env.ACT }}
+
+            - name: Mark Gradle as Executable
+              run: chmod +x ./gradlew
+
+            - name: Run Game Tests
+              run: ./gradlew :runGameTestServer
+              env:
+                  VERSION: ${{ inputs.version }}
+                  GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Upload test failure (GameTest)
+              if: failure()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: game-test-data
+                  path: ./run/gametest
+
+            - name: Run JUnit Tests
+              run: ./gradlew :test
+              env:
+                  VERSION: ${{ inputs.version }}
+                  GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Upload test failure (JUnit)
+              if: failure()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: junit-test-data
+                  path: ./build/reports

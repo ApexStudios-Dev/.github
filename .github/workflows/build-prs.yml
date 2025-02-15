@@ -9,7 +9,7 @@ on:
                 default: temurin
 
 jobs:
-    vars:
+    get-vars:
         name: Get Variables
         runs-on: apexstudios
         outputs:
@@ -30,35 +30,20 @@ jobs:
                 search_commit_body: true
                 bump_each_commit: true
 
-    build-prs:
-        name: Build PR - ${{ github.event.pull_request.number }}
-        needs: [ vars ]
-        runs-on: apexstudios
-        env:
-            VERSION: ${{ needs.vars.outputs.version }}-${{ github.event.pull_request.number }}
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-              with:
-                fetch-depth: 0
-                fetch-tags: true
+    # test:
+    #     needs: [ get-vars ]
+    #     uses: ApexStudios-Dev/.github/.github/workflows/_tests.yml@master
+    #     secrets: inherit
+    #     with:
+    #         java_version: ${{ inputs.java_version }}
+    #         java_vendor: ${{ inputs.java_vendor }}
+    #         version: ${{ needs.get-vars.outputs.version }}
 
-            - name: Create branch for PR
-              run: git switch -C pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.ref }}
-
-            - name: Setup Java
-              uses: actions/setup-java@v4
-              with:
-                  distribution: ${{ inputs.java_vendor }}
-                  java-version: ${{ inputs.java_version }}
-
-            - name: Setup Gradle
-              uses: gradle/actions/setup-gradle@v4
-              with:
-                  cache-disabled: ${{ ! env.ACT }}
-
-            - name: Mark Gradle as Executable
-              run: chmod +x ./gradlew
-
-            - name: Build
-              run: ./gradlew :build --refresh-dependencies
+    build:
+        needs: [ get-vars ]
+        uses: ApexStudios-Dev/.github/.github/workflows/_build.yml@master
+        secrets: inherit
+        with:
+            java_version: ${{ inputs.java_version }}
+            java_vendor: ${{ inputs.java_vendor }}
+            version: ${{ needs.get-vars.outputs.version }}

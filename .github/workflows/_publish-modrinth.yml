@@ -1,0 +1,42 @@
+on:
+    workflow_call:
+        inputs:
+            java_version:
+                type: string
+                required: true
+            java_vendor:
+                type: string
+                required: true
+            version:
+                type: string
+                required: true
+            artifact_id:
+                type: string
+                default: artifacts
+            modrinth_id:
+                type: string
+                required: true
+            release_type:
+                type: string
+                required: true
+
+jobs:
+    publish-modrinth:
+        name: Publish Modrinth - v${{ inputs.version }}
+        runs-on: apexstudios
+        steps:
+            - name: Download Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: ${{ inputs.artifact_id }}
+                  path: ./build/libs/*[!(sources|data)].jar
+
+            - name: Publish Modrinth
+              uses: Kir-Antipov/mc-publish@v3.3
+              with:
+                  modrinth-id: ${{ inputs.modrinth_id }}
+                  modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+                  version: ${{ inputs.version }}
+                  version-type: ${{ inputs.release_type }}
+                  java: ${{ inputs.java_version }}

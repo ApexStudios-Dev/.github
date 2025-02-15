@@ -10,6 +10,9 @@ on:
             version:
                 type: string
                 required: true
+            github_package_url:
+                type: string
+                required: true
 
 jobs:
     publish-maven:
@@ -40,5 +43,6 @@ jobs:
                   VERSION: ${{ inputs.version }}
                   GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_PACKAGE_URL: ${{ inputs.github_package_url }}
                   MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
                   MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}

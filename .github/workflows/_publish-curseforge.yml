@@ -40,3 +40,4 @@ jobs:
                   version: ${{ inputs.version }}
                   version-type: ${{ inputs.release_type }}
                   java: ${{ inputs.java_version }}
+                  loaders: neoforge

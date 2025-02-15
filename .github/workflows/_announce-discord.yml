@@ -21,22 +21,19 @@ jobs:
         steps:
             - name: Announce to Discord
               run: |
-                  RESPONSE=$(curl -H "Content-Type: application/json" -X POST -d '{
-                      "content": "",
-                      "embeds": [
-                          {
-                              "author": { "name": "${{ inputs.name }}" },
-                              "title": "${{ inputs.name }} updated to v${{ inputs.version }}!",
-                              "footer": {
-                                  "text": "ApexStudios",
-                                  "icon_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png"
-                              },
-                              "thumbnail": { "url": "${{ inputs.logo }}" },
-                              "color": ${{ inputs.color }},
-                              "timestamp": "$(date +"%Y-%m-%dT%H:%M:%SZ")"
-                          }
-                      ],
-                      "username": "ApexStudios",
-                      "avatar_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png"
-                  }' ${{ https://discord.com/api/webhooks/980083826959188000/qIurcFqZM7xGXzKt_9pPcO2HLKFzK4xeI5hBxghaUdtXTCbALZgBLhpuoTeYE1dcm43s }})
-                  echo "Discord WebHook response: $RESPONSE"
+                  curl -H "Content-Type: application/json" -X POST -d '{
+                  "content": "",
+                  "embeds": [
+                      {
+                          "title": "${{ inputs.name }} updated to v${{ inputs.version }}!",
+                          "footer": {
+                              "text": "ApexStudios",
+                              "icon_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png"
+                          },
+                          "thumbnail": { "url": "${{ inputs.logo }}" },
+                          "color": ${{ inputs.color }}
+                      }
+                  ],
+                  "username": "ApexStudios",
+                  "avatar_url": "https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png"
+                  }' "https://discord.com/api/webhooks/980083826959188000/qIurcFqZM7xGXzKt_9pPcO2HLKFzK4xeI5hBxghaUdtXTCbALZgBLhpuoTeYE1dcm43s"

@@ -40,7 +40,7 @@ jobs:
                   modrinth-id: EjjiYArZ
                   modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
 
-                  files: ./build/libs/*[!(sources|data)].jar
+                  files: ./build/modrinth-libs/*[!(sources|data)].jar
                   name: ${{ inputs.name }}-${{ inputs.version }}
                   version: ${{ inputs.version }}
                   version-type: ${{ inputs.release_type }}

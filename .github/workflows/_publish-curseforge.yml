@@ -43,7 +43,7 @@ jobs:
                   curseforge-id: 835372
                   curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
-                  files: ./build/libs/*[!(sources|data)].jar
+                  files: ./build/curseforge-libs/*[!(sources|data)].jar
                   name: ${{ inputs.name }}-${{ inputs.version }}
                   version: ${{ inputs.version }}
                   version-type: ${{ inputs.release_type }}

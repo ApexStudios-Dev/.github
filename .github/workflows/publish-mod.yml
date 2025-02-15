@@ -105,14 +105,14 @@ jobs:
 #            release_type: ${{ inputs.release_type }}
 #            name: ${{ inputs.name }}
 
-#    announce-discord:
-#        # needs: [ get-vars, publish-maven, publish-curseforge, publish-modrinth ]
-#        needs: [ get-vars, publish-maven, publish-curseforge ]
-#        if: success()
-#        uses: ApexStudios-Dev/.github/.github/workflows/_announce-discord.yml@master
-#        secrets: inherit
-#        with:
-#            version: ${{ needs.get-vars.outputs.version }}
-#            name: ${{ inputs.name }}
-#            logo: ${{ inputs.logo }}
-#            color: ${{ inputs.color }}
+    announce-discord:
+        # needs: [ get-vars, publish-maven, publish-curseforge, publish-modrinth ]
+        needs: [ get-vars, publish-maven, publish-curseforge ]
+        if: success()
+        uses: ApexStudios-Dev/.github/.github/workflows/_announce-discord.yml@master
+        secrets: inherit
+        with:
+            version: ${{ needs.get-vars.outputs.version }}
+            name: ${{ inputs.name }}
+            logo: ${{ inputs.logo }}
+            color: ${{ inputs.color }}

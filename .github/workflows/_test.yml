@@ -29,6 +29,7 @@ jobs:
               uses: gradle/actions/setup-gradle@v4
               with:
                   cache-disabled: ${{ ! env.ACT }}
+                  cache-read-only: false
 
             - name: Mark Gradle as Executable
               run: chmod +x ./gradlew

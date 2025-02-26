@@ -34,10 +34,10 @@ jobs:
             - name: Mark Gradle as Executable
               run: chmod +x ./gradlew
 
-#            - name: Publish Maven
-#              if: ${{ ! env.ACT }}
-#              run: ./gradlew :publish
-#              env:
-#                  VERSION: ${{ inputs.version }}
-#                  MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-#                  MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+            - name: Publish Maven
+              if: ${{ ! env.ACT }}
+              run: ./gradlew :publish
+              env:
+                  VERSION: ${{ inputs.version }}
+                  MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+                  MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}

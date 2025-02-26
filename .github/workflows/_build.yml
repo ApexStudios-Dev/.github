@@ -12,7 +12,7 @@ on:
                 required: true
             artifact_id:
                 type: string
-                default: artifacts
+                required: true
 
 jobs:
     build:
@@ -45,6 +45,6 @@ jobs:
             - name: Upload Built Artifacts
               uses: actions/upload-artifact@v4
               with:
-                  name: ${{ inputs.artifact_id }}
-                  # we dont want -data or -sources jars
-                  path: ./build/libs/*[!(sources|data)].jar
+                  name: artifacts-${{ inputs.artifact_id }}
+                  path: ./build/libs/${{ inputs.artifact_id }}-${{ inputs.version }}.jar
+                  if-no-files-found: error

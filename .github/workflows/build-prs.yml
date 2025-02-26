@@ -7,6 +7,9 @@ on:
             java_vendor:
                 type: string
                 default: temurin
+            artifact_id:
+                type: string
+                required: true
 
 jobs:
     get-vars:
@@ -47,3 +50,4 @@ jobs:
             java_version: ${{ inputs.java_version }}
             java_vendor: ${{ inputs.java_vendor }}
             version: ${{ needs.get-vars.outputs.version }}
+            artifact_id: ${{ inputs.artifact_id }}

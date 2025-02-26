@@ -29,13 +29,13 @@ jobs:
         runs-on: apexstudios
         steps:
             - name: Delete old artifacts dir
-              run: rm -rf ./build/curseforge-libs/
+              run: rm -rf ./build/curseforge-libs/${{ inputs.artifact_id }}/
 
             - name: Download Artifacts
               uses: actions/download-artifact@v4
               with:
-                  name: ${{ inputs.artifact_id }}
-                  path: ./build/curseforge-libs/
+                  name: artifacts-${{ inputs.artifact_id }}
+                  path: ./build/curseforge-libs/${{inputs.artifact_id}}/
 
             - name: Publish CurseForge
               uses: Kir-Antipov/mc-publish@v3.3
@@ -43,7 +43,7 @@ jobs:
                   curseforge-id: ${{ inputs.curseforge_id }}
                   curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
-                  files: ./build/curseforge-libs/*[!(sources|data)].jar
+                  files: ./build/curseforge-libs/${{ inputs.artifact_id }}/*.jar
                   name: ${{ inputs.name }}-${{ inputs.version }}
                   version: ${{ inputs.version }}
                   version-type: ${{ inputs.release_type }}

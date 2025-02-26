@@ -37,16 +37,16 @@ jobs:
                   name: artifacts-${{ inputs.artifact_id }}
                   path: ./build/curseforge-libs/${{inputs.artifact_id}}/
 
-            - name: Publish CurseForge
-              uses: Kir-Antipov/mc-publish@v3.3
-              with:
-                  curseforge-id: ${{ inputs.curseforge_id }}
-                  curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-
-                  files: ./build/curseforge-libs/${{ inputs.artifact_id }}/*.jar
-                  name: ${{ inputs.name }}-${{ inputs.version }}
-                  version: ${{ inputs.version }}
-                  version-type: ${{ inputs.release_type }}
-                  changelog: ""
-                  loaders: neoforge
-                  java: ${{ inputs.java_version }}
+#            - name: Publish CurseForge
+#              uses: Kir-Antipov/mc-publish@v3.3
+#              with:
+#                  curseforge-id: ${{ inputs.curseforge_id }}
+#                  curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+#
+#                  files: ./build/curseforge-libs/${{ inputs.artifact_id }}/*.jar
+#                  name: ${{ inputs.name }}-${{ inputs.version }}
+#                  version: ${{ inputs.version }}
+#                  version-type: ${{ inputs.release_type }}
+#                  changelog: ""
+#                  loaders: neoforge
+#                  java: ${{ inputs.java_version }}

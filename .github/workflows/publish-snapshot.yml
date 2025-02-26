@@ -52,12 +52,12 @@ jobs:
              version: ${{ needs.get-vars.outputs.version }}
              artifact_id: ${{ inputs.artifact_id }}
 
-    publish-maven:
-        needs: [ get-vars, build ]
-        if: success()
-        uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
-        secrets: inherit
-        with:
-            java_version: ${{ inputs.java_version }}
-            java_vendor: ${{ inputs.java_vendor }}
-            version: ${{ needs.get-vars.outputs.version }}
+#    publish-maven:
+#        needs: [ get-vars, build ]
+#        if: success()
+#        uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+#        secrets: inherit
+#        with:
+#            java_version: ${{ inputs.java_version }}
+#            java_vendor: ${{ inputs.java_vendor }}
+#            version: ${{ needs.get-vars.outputs.version }}

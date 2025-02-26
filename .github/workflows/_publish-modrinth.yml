@@ -19,6 +19,9 @@ on:
             release_type:
                 type: string
                 required: true
+            name:
+                type: string
+                required: true
 
 jobs:
     publish-modrinth:

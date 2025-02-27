@@ -2,7 +2,7 @@
 
 <br>
 
-**ApexCore** is a library mod required by all of **ApexStudios'** mods, such as [**Fantasy's Furniture**](https://www.curseforge.com/minecraft/mc-mods/fantasys-furniture), [**Fantasy's Dice**](https://www.curseforge.com/minecraft/mc-mods/fantasys-dice) and [**Infused Foods**](https://www.curseforge.com/minecraft/mc-mods/infused-foods).
+**ApexCore** is a library mod required by all of **ApexStudios'** mods, such as [**Fantasy's Furniture**](https://modrinth.com/mod/fantasy-furniture), [**Fantasy's Dice**](https://modrinth.com/mod/fantasy-dice) and [**Infused Foods**](https://modrinth.com/mod/infused-foods).
 
 ---
 

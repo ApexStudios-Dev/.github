@@ -14,12 +14,12 @@ The **Furniture Station** can be crafted in any 2x2 crafting grid (or larger) by
 Fantasy's Furniture has been split up into modules 1 for each furniture set. This is to allow players to pick and choose which furniture sets they wish to be playing with.
 Installing Fantasy's Furniture standalone will gain you nothing, so please be sure to install one of the below modules.
 
-- [**Nordic***](https://modrinth.com/project/fantasys-furniture-nordic)
-- **Venthyr***
-- **Dunmer***
-- **Bone*** - Comes with 2 variations (**Bone** & **Wither**)
-- **Royal***
-- **Necrolord***
+- [**Nordic**](https://modrinth.com/project/fantasys-furniture-nordic)
+- [**Venthyr**](https://modrinth.com/mod/fantasys-furniture-venthyr)
+- [**Dunmer**\*](https://modrinth.com/project/fantasys-furniture-dunmer)
+- [**Bone**\* - Comes with 2 variations (**Bone** & **Wither**)](https://modrinth.com/project/fantasys-furniture-bone)
+- [**Royal**\*](https://modrinth.com/project/fantasys-furniture-royal)
+- [**Necrolord**\*](https://modrinth.com/project/fantasys-furniture-necrolord)
 
 Along side these modules comes our **Decorations*** module, unlike the above this module does not add any new furniture set. Rather it adds various additional decortational blocks
 

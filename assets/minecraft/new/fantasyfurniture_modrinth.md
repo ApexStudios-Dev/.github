@@ -21,7 +21,7 @@ Installing Fantasy's Furniture standalone will gain you nothing, so please be su
 - [**Royal**\*](https://modrinth.com/project/fantasys-furniture-royal)
 - [**Necrolord**\*](https://modrinth.com/project/fantasys-furniture-necrolord)
 
-Along side these modules comes our **Decorations*** module, unlike the above this module does not add any new furniture set. Rather it adds various additional decortational blocks
+Along side these modules comes our **Decorations*** module, unlike the above this module does not add any new furniture set. Rather it adds various additional decorational blocks
 
 _* - Still in active development, and may not yet be publicly available_
 

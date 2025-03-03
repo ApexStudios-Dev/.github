@@ -33,6 +33,11 @@ jobs:
             - name: Run datagen
               run: ./gradlew :runData
 
+            # This is needed otherwise the 'git status' below reports as 'gradlew' being changed
+            # Tried running 'git update-index --chmod=+x ./gradlew' to have perms tracked but this did not work
+            - name: Mark Gradle as not Executable
+              run: chmod -x ./gradlew
+
             - name: Check no local changes are present
               run: |
                 git status

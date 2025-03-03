@@ -17,7 +17,7 @@ on:
 jobs:
     announce-discord:
         name: Announce to Discord - v${{ inputs.version }}
-        runs-on: apexstudios
+        runs-on: ubuntu-latest
         steps:
             - name: Announce to Discord
               env:

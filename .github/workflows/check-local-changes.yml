@@ -41,5 +41,5 @@ jobs:
             - name: Check no local changes are present
               run: |
                 git status
-                if [ -n "$(git status --porcelain" ]; then exit 1; fi
+                if [ -n "$(git status --porcelain)" ]; then exit 1; fi
 

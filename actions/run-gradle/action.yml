@@ -1,0 +1,38 @@
+name: Run Gradle
+
+inputs:
+    setup:
+        description: Setup Gradle
+        type: boolean
+        required: false
+        default: false
+    tasks:
+        description: Gradle tasks to run
+        type: string
+        required: true
+
+runs:
+    using: composite
+    steps:
+        - name: Setup Gradle
+          if: inputs.setup
+          uses: gradle/actions/setup-gradle@v4
+          with:
+              cache-disabled: ${{ !env.ACT }}
+              cache-read-only: false
+
+        - name: Mark Gradle as Executable
+          if: inputs.setup
+          shell: bash
+          run: chmod +x ./gradlew
+
+        - name: Run Gradle tasks (${{ inputs.tasks }})
+          shell: bash
+          run: ./gradlew ${{ inputs.tasks }}
+
+        # This is needed otherwise the 'git status' below reports as 'gradlew' being changed
+        # Tried running 'git update-index --chmod=+x ./gradlew' to have perms tracked but this did not work
+        - name: Unmark Gradle as Executable
+          if: inputs.setup
+          shell: bash
+          run: chmod -x ./gradlew

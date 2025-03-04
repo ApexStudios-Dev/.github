@@ -1,0 +1,39 @@
+name: Checkout Git Repo
+
+outputs:
+    version:
+        description: Generated version number
+        value: ${{ steps.version.outputs.version }}
+
+runs:
+    using: composite
+    steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v4
+          with:
+              fetch-depth: 0
+              fetch-tags: true
+
+        - name: Fetch Tags
+          if: ${{ !env.ACT }}
+          shell: bash
+          run: git fetch --tags
+
+        - name: Create branch for PR
+          if: github.event == 'pull_request'
+          shell: bash
+          run: git switch -C pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.ref }}
+
+        - name: Create branch for Commit
+          if: ${{ !env.ACT && github.event != 'pull_request' }}
+          shell: bash
+          run: echo "git switch -C ${{ github.ref_name }}"
+
+        - name: Determine version
+          uses: paulhatch/semantic-version@v5.4.0
+          id: version
+          with:
+              change_path: "./"
+              version_format: "${major}.${minor}.${patch}"
+              search_commit_body: true
+              bump_each_commit: true

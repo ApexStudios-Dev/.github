@@ -1,120 +1,88 @@
+name: Publish Mod
+
 on:
     workflow_call:
         inputs:
-            java_version:
-                type: string
-                default: 17
-            java_vendor:
-                type: string
-                default: temurin
-            curseforge_id:
+            display_name:
                 type: string
                 required: true
-            modrinth_id:
-                type: string
-                required: true
-            release_type:
-                type: string
-                default: release
-            name:
-                type: string
-                required: true
-            logo:
+            logo_url:
                 type: string
                 required: true
             color:
-                type: string
+                type: number
                 required: true
+            release_type:
+                type: string
+                required: false
+                default: release
             artifact_id:
                 type: string
                 required: true
+            curseforge_id:
+                type: string
+                required: false
+            modrinth_id:
+                type: string
+                required: false
+            maven:
+                type: boolean
+                required: false
+                default: true
 
 jobs:
-    get-vars:
-        name: Get Variables
-        runs-on: ubuntu-latest
-        outputs:
-            version: ${{ steps.version.outputs.version }}
-        steps:
-            - name: Checkout repository
-              uses: actions/checkout@v4
-              with:
-                fetch-depth: 0
-                fetch-tags: true
-
-            - name: Determine version
-              uses: paulhatch/semantic-version@v5.4.0
-              id: version
-              with:
-                change_path: "./"
-                version_format: "${major}.${minor}.${patch}"
-                search_commit_body: true
-                bump_each_commit: true
-
-#    test:
-#         needs: [ get-vars ]
-#         uses: ApexStudios-Dev/.github/.github/workflows/_test.yml@master
-#         secrets: inherit
-#         with:
-#             java_version: ${{ inputs.java_version }}
-#             java_vendor: ${{ inputs.java_vendor }}
-#             version: ${{ needs.get-vars.outputs.version }}
-
     build:
-         needs: [ get-vars ]
-         uses: ApexStudios-Dev/.github/.github/workflows/_build.yml@master
-         secrets: inherit
-         with:
-             java_version: ${{ inputs.java_version }}
-             java_vendor: ${{ inputs.java_vendor }}
-             version: ${{ needs.get-vars.outputs.version }}
-             artifact_id: ${{ inputs.artifact_id }}
+        name: Build
+        runs-on: apexstudios
+        outputs:
+            timestamp: ${{ steps.timestamp.outputs.output }}
+            version: ${{ steps.checkout.outputs.version }}
+        steps:
+            - name: Checkout Repository
+              id: checkout
+              uses: ApexStudios-Dev/.github/actions/checkout@master
+
+            - name: Setup Java
+              uses: ApexStudios-Dev/.github/actions/setup-java@master
+
+            - name: Build with Gradle
+              uses: ApexStudios-Dev/.github/actions/run-gradle@master
+              with:
+                  setup: true
+                  tasks: :build
+              env:
+                  VERSION: ${{ steps.checkout.outputs.version }}
+
+            - name: Generate Timestamp
+              id: timestamp
+              shell: bash
+              run: echo "output=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
+
+            - name: Upload Artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: artifacts
+                  path: ./build/libs/*.jar
+                  if-no-files-found: error
 
     publish-maven:
-        needs: [ get-vars, build ]
-        if: success()
+        name: Publish to Maven
+        needs: build
+        if: inputs.maven
         uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
-        secrets: inherit
-        with:
-            java_version: ${{ inputs.java_version }}
-            java_vendor: ${{ inputs.java_vendor }}
-            version: ${{ needs.get-vars.outputs.version }}
 
-    publish-curseforge:
-        needs: [ get-vars, build ]
+    publish-platforms:
+        name: Publish to Platforms
+        needs: [ build, publish-maven ]
         if: success()
-        uses: ApexStudios-Dev/.github/.github/workflows/_publish-curseforge.yml@master
-        secrets: inherit
+        uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod-platforms.yml@master
         with:
-            java_version: ${{ inputs.java_version }}
-            java_vendor: ${{ inputs.java_vendor }}
-            version: ${{ needs.get-vars.outputs.version }}
-            curseforge_id: ${{ inputs.curseforge_id }}
-            release_type: ${{ inputs.release_type }}
-            name: ${{ inputs.name }}
-            artifact_id: ${{ inputs.artifact_id }}
-
-    publish-modrinth:
-        needs: [ get-vars, build ]
-        if: success()
-        uses: ApexStudios-Dev/.github/.github/workflows/_publish-modrinth.yml@master
-        secrets: inherit
-        with:
-            java_version: ${{ inputs.java_version }}
-            java_vendor: ${{ inputs.java_vendor }}
-            version: ${{ needs.get-vars.outputs.version }}
-            modrinth_id: ${{ inputs.modrinth_id }}
-            release_type: ${{ inputs.release_type }}
-            name: ${{ inputs.name }}
-            artifact_id: ${{ inputs.artifact_id }}
-
-    announce-discord:
-        needs: [ get-vars, publish-curseforge, publish-modrinth ]
-        if: success()
-        uses: ApexStudios-Dev/.github/.github/workflows/_announce-discord.yml@master
-        secrets: inherit
-        with:
-            version: ${{ needs.get-vars.outputs.version }}
-            name: ${{ inputs.name }}
-            logo: ${{ inputs.logo }}
+            version: ${{ needs.build.outputs.version }}
+            build_timestamp: ${{ needs.build.outputs.build_timestamp }}
+            display_name: ${{ inputs.display_name }}
+            logo_url: ${{ inputs.logo_url }}
             color: ${{ inputs.color }}
+            release_type: ${{ inputs.release_type }}
+            artifact_id: ${{ inputs.artifact_id }}
+            curseforge_id: ${{ inputs.curseforge_id }}
+            modrinth_id: ${{ inputs.modrinth_id }}

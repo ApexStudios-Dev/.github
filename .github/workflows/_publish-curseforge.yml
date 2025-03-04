@@ -1,52 +1,59 @@
+name: Publish to CurseForge
+
 on:
     workflow_call:
         inputs:
-            java_version:
-                type: string
-                required: true
-            java_vendor:
+            display_name:
                 type: string
                 required: true
             version:
                 type: string
                 required: true
-            artifact_id:
-                type: string
-                default: artifacts
-            curseforge_id:
-                type: string
-                required: true
             release_type:
                 type: string
                 required: true
-            name:
+            artifact_id:
                 type: string
                 required: true
+            curseforge_id:
+                type: string
+                required: true
+        outputs:
+            download:
+                value: ${{ jobs.publish-curseforge.outputs.download }}
 
 jobs:
     publish-curseforge:
-        name: Publish CurseForge - v${{ inputs.version }}
+        name: Publish to CurseForge
         runs-on: ubuntu-latest
+        outputs:
+            download: ${{ steps.publish.outputs.curseforge_url }}
         steps:
             - name: Delete old artifacts dir
-              run: rm -rf ./build/curseforge-libs/${{ inputs.artifact_id }}/
+              shell: bash
+              run: rm -rf ./build/curseforge-libs/
 
             - name: Download Artifacts
               uses: actions/download-artifact@v4
               with:
-                  name: artifacts-${{ inputs.artifact_id }}
-                  path: ./build/curseforge-libs/${{inputs.artifact_id}}/
+                  name: artifacts
+                  path: ./build/curseforge-libs/
 
-            - name: Publish CurseForge
+            - name: Validate artifact exists
+              shell: bash
+              run: if [ ! -f "./build/curseforge-libs/${{ inputs.artifact_id }}-${{ inputs.version }}.jar" ]; then exit 1; fi
+
+            - name: Publish to CurseForge
+              if: ${{ !env.ACT }}
+              id: publish
               uses: Kir-Antipov/mc-publish@v3.3
               with:
                   curseforge-id: ${{ inputs.curseforge_id }}
                   curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
-                  files: ./build/curseforge-libs/${{ inputs.artifact_id }}/*.jar
-                  name: ${{ inputs.name }}-${{ inputs.version }}
+                  files: ./build/curseforge-libs/${{ inputs.artifact_id }}-${{ inputs.version }}.jar
+                  name: ${{ inputs.display_name }}-${{ inputs.version }}
                   version: ${{ inputs.version }}
                   version-type: ${{ inputs.release_type }}
                   changelog: ""
                   loaders: neoforge
-                  java: ${{ inputs.java_version }}

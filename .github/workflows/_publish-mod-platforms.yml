@@ -37,6 +37,7 @@ jobs:
         name: Publish to CurseForge
         uses: ApexStudios-Dev/.github/.github/workflows/_publish-curseforge.yml@master
         if: inputs.curseforge
+        secrets: inherit
         with:
             display_name: ${{ inputs.display_name }}
             version: ${{ inputs.version }}
@@ -48,6 +49,7 @@ jobs:
         name: Publish to Modrinth
         uses: ApexStudios-Dev/.github/.github/workflows/_publish-modrinth.yml@master
         if: inputs.modrinth
+        secrets: inherit
         with:
             display_name: ${{ inputs.display_name }}
             version: ${{ inputs.version }}
@@ -64,7 +66,7 @@ jobs:
             - name: Send Announcement to Discord
               uses: ApexStudios-Dev/.github/actions/discord-version-notify@master
               with:
-                  webhook_url: ${{ env.DISCORD_WEBHOOK_URL }}
+                  webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
                   display_name: ${{ inputs.display_name }}
                   version: ${{ inputs.version }}
                   logo_url: ${{ inputs.logo_url }}

@@ -70,12 +70,14 @@ jobs:
         needs: build
         if: inputs.maven
         uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+        secrets: inherit
 
     publish-platforms:
         name: Publish to Platforms
         needs: [ build, publish-maven ]
         if: success()
         uses: ApexStudios-Dev/.github/.github/workflows/_publish-mod-platforms.yml@master
+        secrets: inherit
         with:
             version: ${{ needs.build.outputs.version }}
             build_timestamp: ${{ needs.build.outputs.build_timestamp }}

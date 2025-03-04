@@ -19,15 +19,15 @@ runs:
           shell: bash
           run: git fetch --tags
 
-        - name: Create branch for PR
-          if: github.event == 'pull_request'
-          shell: bash
-          run: git switch -C pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.ref }}
-
-        - name: Create branch for Commit
-          if: ${{ !env.ACT && github.event != 'pull_request' }}
-          shell: bash
-          run: git switch -C ${{ github.ref_name }}
+#        - name: Create branch for PR
+#          if: github.event == 'pull_request'
+#          shell: bash
+#          run: git switch -C pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.ref }}
+#
+#        - name: Create branch for Commit
+#          if: ${{ !env.ACT && github.event != 'pull_request' }}
+#          shell: bash
+#          run: git switch -C ${{ github.ref_name }}
 
         - name: Determine version
           uses: paulhatch/semantic-version@v5.4.0

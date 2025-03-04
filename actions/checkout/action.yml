@@ -27,7 +27,7 @@ runs:
         - name: Create branch for Commit
           if: ${{ !env.ACT && github.event != 'pull_request' }}
           shell: bash
-          run: echo "git switch -C ${{ github.ref_name }}"
+          run: git switch -C ${{ github.ref_name }}
 
         - name: Determine version
           uses: paulhatch/semantic-version@v5.4.0

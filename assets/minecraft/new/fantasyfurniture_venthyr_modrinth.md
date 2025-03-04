@@ -2,7 +2,9 @@
 
 <br>
 
-**Venthyr** Furniture set for [**Fantasy's Furniture**](https://modrinth.com/mod/fantasy-furniture)
+**Venthyr** Furniture set for [**Fantasy's Furniture**](https://modrinth.com/mod/fantasy-furniture), adds fully functional furniture including, but not limited to: **Chests**, **Drawers**, **Beds**, **Seats**, and more!
+
+The designs for this furniture set were heavily inspired by **Venthyr** covenant from the **Shadowlands Expansion** of **World Of Warcraft**.
 
 ---
 

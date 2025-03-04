@@ -2,7 +2,9 @@
 
 <br>
 
-**Bone** Furniture set for [**Fantasy's Furniture**](https://modrinth.com/mod/fantasy-furniture)
+**Bone** Furniture set for [**Fantasy's Furniture**](https://modrinth.com/mod/fantasy-furniture), adds fully functional furniture including, but not limited to: **Chests**, **Drawers**, **Beds**, **Seats**, and more!
+
+This furniture set comes with two variants, **Skeleton** and **Wither**, both of which contain the same set of furniture blocks.
 
 ---
 

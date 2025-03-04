@@ -2,7 +2,9 @@
 
 <br>
 
-**Royal** Furniture set for [**Fantasy's Furniture**](https://modrinth.com/mod/fantasy-furniture)
+**Royal** Furniture set for [**Fantasy's Furniture**](https://modrinth.com/mod/fantasy-furniture), adds fully functional furniture including, but not limited to: **Chests**, **Drawers**, **Beds**, **Seats**, and more!
+
+The designs for this furniture set were heavily inspired from typical **Baroque** and **Regal** furniture designs, all made with **Gold** and **Dyeable Wool**!
 
 ---
 

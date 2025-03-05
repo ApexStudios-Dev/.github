@@ -4,7 +4,6 @@ runs:
     using: composite
     steps:
         - name: Setup Gradle
-          if: inputs.setup
           uses: gradle/actions/setup-gradle@v4
           with:
               cache-disabled: ${{ !env.ACT }}

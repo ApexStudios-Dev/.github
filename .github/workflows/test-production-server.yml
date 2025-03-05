@@ -1,0 +1,171 @@
+# Currently unused but should function perfectly fine for any mod without dependencies
+#
+# Example usage
+#
+# on:
+#    pull_request:
+#        types:
+#            - synchronize
+#            - opened
+#            - ready_for_review
+#            - reopened
+# jobs:
+#    test-production-server:
+#        uses: ApexStudios-Dev/.github/.github/workflows/test-production-server.yml@master
+#        with:
+#           # neoforge version to be installed
+#           # if omitted the latest version is attempted to be looked up
+#           neoforge_version: 21.4.0-beta
+#
+#           # java version to be installed
+#           # must be valid for given neoforge version
+#           java_version: 21
+#
+#           # whether or not to compile the owning project
+#           # and install it into the server
+#           compile_project: true # default
+
+name: Test Production Server
+
+on:
+    workflow_call:
+        inputs:
+            neoforge_version:
+                description: Version of NeoForge to install
+                type: string
+                required: false
+            java_version: # should be valid for given neoforge (minecraft) version
+                description: Version of Java to install
+                type: string
+                required: false
+                default: 21
+            compile_project:
+                description: Whether or not to compile and install the owning project into the mods directory
+                type: boolean
+                required: false
+                default: true
+
+jobs:
+    # could be merged into where we install the production server
+    # but having this here ensures the whole workflow only runs if a valid version is given
+    download-neoforge:
+        name: Download NeoForge
+        runs-on: ubuntu-latest
+        steps:
+            - name: Determine latest NeoForge version
+              if: inputs.neoforge_version == ''
+              id: version
+              shell: bash
+              run: |
+                echo version=$(curl -H "Accept: application/json" -H "Content-type: application/json" "https://maven.neoforged.net/api/maven/latest/version/releases/net/neoforged/neoforge/" | jq -r .version) >> $GITHUB_OUTPUT
+
+            - name: Download NeoForge Installer
+              shell: bash
+              run: wget "https://maven.neoforged.net/releases/net/neoforged/neoforge/$NEOFORGE_VERSION/neoforge-$NEOFORGE_VERSION-installer.jar" -O "neoforge-installer.jar"
+              env:
+                  NEOFORGE_VERSION: ${{ inputs.neoforge_version || steps.version.outputs.version }}
+
+            - name: Upload NeoForge Installer
+              uses: actions/upload-artifact@v4
+              with:
+                  path: neoforge-installer.jar
+                  name: neoforge-installer
+                  if-no-files-found: error
+
+    # compiles and uploads the mod jar to be tested
+    build-mod:
+        name: Build Mod
+        runs-on: apexstudios
+        needs: download-neoforge
+        if: ${{ inputs.compile_project && success() }}
+        steps:
+            - name: Checkout Repository
+              id: checkout
+              uses: ApexStudios-Dev/.github/actions/checkout@master
+
+            - name: Setup Java
+              uses: ApexStudios-Dev/.github/actions/setup-java@master
+              with:
+                  version: ${{ inputs.java_version }}
+
+            - name: Setup Gradle
+              uses: ApexStudios-Dev/.github/actions/setup-gradle@master
+
+            - name: Run Gradle
+              shell: bash
+              run: ./gradlew :build
+              env:
+                  VERSION: ${{ steps.checkout.outputs.version }}
+
+            # need a better method of select the correct mod jar, but this works for now
+            - name: Delete Unwanted Mod Jars
+              shell: bash
+              run: rm -fv ./build/libs/*-data*.jar ./build/libs/*-sources*.jar ./build/libs/*-api*.jar
+
+            # upload mod jar to be installed into mods directory later
+            - name: Upload Mod Jar
+              uses: actions/upload-artifact@v4
+              with:
+                name: artifacts
+                path: ./build/libs/*.jar
+                if-no-files-found: error
+
+    # actual production server testing logic
+    test-production-server:
+        name: Test Production Server
+        needs: build-mod
+        if: success()
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup Java
+              uses: ApexStudios-Dev/.github/actions/setup-java@master
+              with:
+                  version: ${{ inputs.java_version }}
+
+            # download and install NeoForge (server)
+            - name: Download NeoForge Installer
+              uses: actions/download-artifact@v4
+              with:
+                  name: neoforge-installer
+
+            - name: Install NeoForge (Server)
+              shell: bash
+              run: java -jar neoforge-installer.jar --install-server
+
+            # ensure eula is accepted
+            - name: Prepare Environment
+              shell: bash
+              run: |
+                  touch ./eula.txt
+                  echo "eula=true" >> ./eula.txt
+                  rm -rf ./mods
+
+            # install compiled mod into the mods directory
+            - name: Install Mod
+              if: inputs.compile_project
+              uses: actions/download-artifact@v4
+              with:
+                  name: artifacts
+                  path: ./mods
+
+            # run the production server
+            - name: Run Production Server
+              shell: bash
+              run: ./run.sh
+              env:
+                  # neoforge uses this env var to shutdown server after first tick
+                  # neodevs internal 'test-production-server' tasks fail if this file does not exist
+                  # after server has ran, we mimic the same functionality below
+                  # https://github.com/neoforged/NeoForge/blob/ea51140336afccf0495a31a6e0e795ca702d361a/src/main/java/net/neoforged/neoforge/common/util/SelfTest.java
+                  NEOFORGE_DEDICATED_SERVER_SELFTEST: ${{ github.workspace }}/server_self_test.txt
+
+            - name: Cleanup Environment
+              if: always()
+              shell: bash
+              run: rm -f ./eula.txt
+
+            # kill the workflow if self test file was not generated
+            # this could mean server ran into some error/hard crashed before neos self test could shut it down
+            - name: Validate Self Test
+              shell: bash
+              run: if [ ! -f "./server_self_test.txt" ]; then exit 1; fi

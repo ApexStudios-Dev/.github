@@ -36,7 +36,7 @@ jobs:
     publish-curseforge:
         name: Publish to CurseForge
         uses: ApexStudios-Dev/.github/.github/workflows/_publish-curseforge.yml@master
-        if: inputs.curseforge
+        if: inputs.curseforge_id
         secrets: inherit
         with:
             display_name: ${{ inputs.display_name }}
@@ -48,7 +48,7 @@ jobs:
     publish-modrinth:
         name: Publish to Modrinth
         uses: ApexStudios-Dev/.github/.github/workflows/_publish-modrinth.yml@master
-        if: inputs.modrinth
+        if: inputs.modrinth_id
         secrets: inherit
         with:
             display_name: ${{ inputs.display_name }}

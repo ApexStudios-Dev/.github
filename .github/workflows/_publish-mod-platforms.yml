@@ -72,5 +72,5 @@ jobs:
                   logo_url: ${{ inputs.logo_url }}
                   color: ${{ inputs.color }}
                   build_timestamp: ${{ inputs.build_timestamp }}
-                  curseforge_url: ${{ needs.publish-curseforge.outputs.download }}
-                  modrinth_url: ${{ needs.publish-modrinth.outputs.download }}
+                  curseforge_url: ${{ needs.publish-curseforge.outputs.curseforge_download }}
+                  modrinth_url: ${{ needs.publish-modrinth.outputs.modrinth_download }}

@@ -19,7 +19,7 @@ on:
                 type: string
                 required: true
         outputs:
-            download:
+            modrinth_download:
                 value: ${{ jobs.publish-modrinth.outputs.download }}
 
 jobs:

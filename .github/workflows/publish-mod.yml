@@ -45,11 +45,12 @@ jobs:
             - name: Setup Java
               uses: ApexStudios-Dev/.github/actions/setup-java@master
 
+            - name: Setup Gradle
+              uses: ApexStudios-Dev/.github/actions/setup-gradle@master
+
             - name: Build with Gradle
-              uses: ApexStudios-Dev/.github/actions/run-gradle@master
-              with:
-                  setup: true
-                  tasks: :build
+              shell: bash
+              run: ./gradlew :build
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}
 

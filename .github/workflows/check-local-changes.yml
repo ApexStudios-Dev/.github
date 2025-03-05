@@ -15,13 +15,21 @@ jobs:
             - name: Setup Java
               uses: ApexStudios-Dev/.github/actions/setup-java@master
 
+            - name: Setup Gradle
+              uses: ApexStudios-Dev/.github/actions/setup-gradle@master
+
             - name: Generate Data
-              uses: ApexStudios-Dev/.github/actions/run-gradle@master
-              with:
-                  setup: true
-                  tasks: :runData
+              shell: bash
+              run: ./gradlew :runData
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}
+
+            # This is needed otherwise the 'git status' below reports as 'gradlew' being changed
+            # Tried running 'git update-index --chmod=+x ./gradlew' to have perms tracked but this did not work
+            - name: Unmark Gradle as Executable
+              if: inputs.setup
+              shell: bash
+              run: chmod -x ./gradlew
 
             - name: Check no local changes are present
               shell: bash

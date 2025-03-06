@@ -55,12 +55,10 @@ jobs:
             - name: Determine latest NeoForge version
               if: inputs.neoforge_version == ''
               id: version
-              shell: bash
               run: |
                 echo version=$(curl -H "Accept: application/json" -H "Content-type: application/json" "https://maven.neoforged.net/api/maven/latest/version/releases/net/neoforged/neoforge/" | jq -r .version) >> $GITHUB_OUTPUT
 
             - name: Download NeoForge Installer
-              shell: bash
               run: wget "https://maven.neoforged.net/releases/net/neoforged/neoforge/$NEOFORGE_VERSION/neoforge-$NEOFORGE_VERSION-installer.jar" -O "neoforge-installer.jar"
               env:
                   NEOFORGE_VERSION: ${{ inputs.neoforge_version || steps.version.outputs.version }}
@@ -92,14 +90,12 @@ jobs:
               uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
             - name: Run Gradle
-              shell: bash
               run: ./gradlew :build
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}
 
             # need a better method of select the correct mod jar, but this works for now
             - name: Delete Unwanted Mod Jars
-              shell: bash
               run: rm -fv ./build/libs/*-data*.jar ./build/libs/*-sources*.jar ./build/libs/*-api*.jar
 
             # upload mod jar to be installed into mods directory later
@@ -129,12 +125,10 @@ jobs:
                   name: neoforge-installer
 
             - name: Install NeoForge (Server)
-              shell: bash
               run: java -jar neoforge-installer.jar --install-server
 
             # ensure eula is accepted
             - name: Prepare Environment
-              shell: bash
               run: |
                   touch ./eula.txt
                   echo "eula=true" >> ./eula.txt
@@ -150,7 +144,6 @@ jobs:
 
             # run the production server
             - name: Run Production Server
-              shell: bash
               run: ./run.sh
               env:
                   # neoforge uses this env var to shutdown server after first tick
@@ -161,11 +154,9 @@ jobs:
 
             - name: Cleanup Environment
               if: always()
-              shell: bash
               run: rm -f ./eula.txt
 
             # kill the workflow if self test file was not generated
             # this could mean server ran into some error/hard crashed before neos self test could shut it down
             - name: Validate Self Test
-              shell: bash
               run: if [ ! -f "./server_self_test.txt" ]; then exit 1; fi

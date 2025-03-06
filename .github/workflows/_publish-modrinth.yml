@@ -30,7 +30,6 @@ jobs:
             download: ${{ steps.publish.outputs.modrinth_url }}
         steps:
             - name: Delete old artifacts dir
-              shell: bash
               run: rm -rf ./build/modrinth-libs/
 
             - name: Download Artifacts
@@ -40,7 +39,6 @@ jobs:
                   path: ./build/modrinth-libs/
 
             - name: Validate artifact exists
-              shell: bash
               run: if [ ! -f "./build/modrinth-libs/${{ inputs.artifact_id }}-${{ inputs.version }}.jar" ]; then exit 1; fi
 
             - name: Publish to Modrinth

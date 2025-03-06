@@ -19,7 +19,6 @@ jobs:
               uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
             - name: Build with Gradle
-              shell: bash
               run: ./gradlew :build
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}

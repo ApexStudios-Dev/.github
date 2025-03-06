@@ -20,7 +20,6 @@ jobs:
 
             - name: Build with Gradle
               if: ${{ !env.ACT }}
-              shell: bash
               run: ./gradlew :publish
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}

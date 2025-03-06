@@ -19,7 +19,6 @@ jobs:
               uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
             - name: Generate Data
-              shell: bash
               run: ./gradlew :runData
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}
@@ -28,11 +27,9 @@ jobs:
             # Tried running 'git update-index --chmod=+x ./gradlew' to have perms tracked but this did not work
             - name: Unmark Gradle as Executable
               if: inputs.setup
-              shell: bash
               run: chmod -x ./gradlew
 
             - name: Check no local changes are present
-              shell: bash
               run: |
                 git status
                 if [ -n "$(git status --porcelain)" ]; then exit 1; fi

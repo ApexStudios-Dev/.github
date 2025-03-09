@@ -15,7 +15,7 @@ on:
       install_artifacts:
         description: Artifacts to be installed into the servers 'mods' directory
         type: string
-        required: true
+        required: false
         default: production-artifacts
 
 jobs:

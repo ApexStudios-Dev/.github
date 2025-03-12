@@ -16,14 +16,14 @@ Installing Fantasy's Furniture standalone will gain you nothing, so please be su
 
 - [**Nordic**](https://modrinth.com/project/fantasys-furniture-nordic)
 - [**Venthyr**](https://modrinth.com/mod/fantasys-furniture-venthyr)
-- [**Dunmer**\*](https://modrinth.com/project/fantasys-furniture-dunmer)
-- [**Bone**\* - Comes with 2 variations (**Bone** & **Wither**)](https://modrinth.com/project/fantasys-furniture-bone)
-- [**Royal**\*](https://modrinth.com/project/fantasys-furniture-royal)
-- [**Necrolord**\*](https://modrinth.com/project/fantasys-furniture-necrolord)
+- [**Dunmer**](https://modrinth.com/project/fantasys-furniture-dunmer)
+- [**Bone** - Comes with 2 variations (**Bone** & **Wither**)](https://modrinth.com/project/fantasys-furniture-bone)
+- [**Royal**](https://modrinth.com/project/fantasys-furniture-royal)
+- [**Necrolord**](https://modrinth.com/project/fantasys-furniture-necrolord)
 
-Along side these modules comes our **Decorations*** module, unlike the above this module does not add any new furniture set. Rather it adds various additional decorational blocks
+Along side these modules comes our **Decorations** module, unlike the above this module does not add any new furniture set. Rather it adds various additional decorational blocks
 
-_* - Still in active development, and may not yet be publicly available_
+_The Decorations module is still in active development, and may not yet be publicly available_
 
 ---
 

@@ -8,6 +8,6 @@
 - **Fantasy's Furniture - Dunmer**: [<span style="color:#94DC8A">_**#94DC8A**_</span>](https://www.colorhexa.com/94DC8A) - `0x94DC8A`|`#94DC8A`
 - **Fantasy's Furniture - Necrolord**: [<span style="color:#B297E7">_**#B297E7**_</span>](https://www.colorhexa.com/B297E7) - `0xB297E7`|`#B297E7`
 - **Fantasy's Furniture - Decorations**: [<span style="color:#FFD0B5">_**#FFD0B5**_</span>](https://www.colorhexa.com/FFD0B5) - `0xFFD0B5`|`#FFD0B5`
-- **Fantasy's Dice**: [<span style="color:#E27E8B">_**#E27E8B**_</span>](https://www.colorhexa.com/E27E8B) - `0xE27E8B`|`#E27E8B`
+- **Fantasy's Dice**: [<span style="color:#FFA8BF">_**#FFA8BF**_</span>](https://www.colorhexa.com/FFA8BF) - `0xFFA8BF`|`#FFA8BF`
 - **Infused Foods**: [<span style="color:#7A4DAF">_**#7A4DAF**_</span>](https://www.colorhexa.com/7A4DAF) - `0x7A4DAF`|`#7A4DAF`
 - **ItemResistance**: [<span style="color:#B50E0E">_**#B50E0E**_</span>](https://www.colorhexa.com/B50E0E) - `0xB50E0E`|`#B50E0E`

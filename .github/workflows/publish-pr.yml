@@ -1,16 +1,16 @@
-name: Publish to Maven
+name: Publish PR
 
 on:
     workflow_call:
 
 jobs:
-    publish-maven:
-        name: Publish to Maven
+  publish-pr:
+        name: Publish PR
         runs-on: apexstudios
         steps:
             - name: Checkout Repository
-              uses: ApexStudios-Dev/.github/actions/checkout@master
               id: checkout
+              uses: ApexStudios-Dev/.github/actions/checkout@master
 
             - name: Setup Java
               uses: ApexStudios-Dev/.github/actions/setup-java@master
@@ -18,10 +18,14 @@ jobs:
             - name: Setup Gradle
               uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
-            - name: Build with Gradle
-              if: ${{ !env.ACT }}
-              run: ./gradlew :publishReleasePublicationToApexStudios-ReleasesRepository
+            - name: Publish with Gradle
+              run: ./gradlew :publishReleasePublicationToApexStudios-PrivateRepository
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}
                   MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
                   MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}
+
+            - name: Comment on PR
+              uses: thollander/actions-comment-pull-request@v3
+              with:
+                message: "Successfully published v`${{ steps.checkout.outputs.version }}` under the repo `https://maven.apexstudios.dev/private`"

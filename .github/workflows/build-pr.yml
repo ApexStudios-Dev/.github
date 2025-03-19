@@ -19,6 +19,8 @@ jobs:
               uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
             - name: Build with Gradle
-              run: ./gradlew :build
+              run: ./gradlew :publishReleasePublicationToApexStudios-PrivateRepository
               env:
                   VERSION: ${{ steps.checkout.outputs.version }}
+                  MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+                  MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}

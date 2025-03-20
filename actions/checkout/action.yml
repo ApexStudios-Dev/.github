@@ -38,8 +38,7 @@ runs:
               search_commit_body: true
               bump_each_commit: true
 
-        - name: Output version (PR)
-          if: github.event_name == 'pull_request'
+        - name: Output version
           id: version
           shell: bash
           run: |

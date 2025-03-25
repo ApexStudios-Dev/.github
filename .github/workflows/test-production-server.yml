@@ -7,6 +7,11 @@ on:
         description: Version of NeoForge to install
         type: string
         required: true
+      neoforge_maven:
+        description: Maven repository to download the NeoForge installer from
+        type: string
+        required: false
+        default: 'https://maven.neoforged.net/releases'
       java_version:
         description: Version of Java to install
         type: string
@@ -30,7 +35,7 @@ jobs:
 
       - name: Download NeoForge Installer
         run: |
-          wget "https://maven.neoforged.net/releases/net/neoforged/neoforge/${{ inputs.neoforge_version }}/neoforge-${{ inputs.neoforge_version }}-installer.jar" -O "neoforge-installer.jar"
+          wget "${{ inputs.neoforge_maven }}/net/neoforged/neoforge/${{ inputs.neoforge_version }}/neoforge-${{ inputs.neoforge_version }}-installer.jar" -O "neoforge-installer.jar"
           java -jar neoforge-installer.jar --install-server
 
       - name: Prepare Environment

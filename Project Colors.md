@@ -1,5 +1,5 @@
 # Project Colors
-- **ApexCore**: [<span style="color:#3C40C7">_**#3C40C7**_</span>](https://www.colorhexa.com/3C40C7) - _AKA Apex-Blue_ - `0x3C40C7`|`#3C40C7` 
+- **ApexCore**: [<span style="color:#3358FA">_**#3358FA**_</span>](https://www.colorhexa.com/3358FA) - _AKA Apex-Blue_ - `0x3358FA`|`#3358FA` 
 - **Fantasy's Furniture**: [<span style="color:#97C6E7">_**#97C6E7**_</span>](https://www.colorhexa.com/97C6E7) - `0x97C6E7`|`#97C6E7`
 - **Fantasy's Furniture - Nordic**: [<span style="color:#97C6E7">_**#97C6E7**_</span>](https://www.colorhexa.com/97C6E7) - `0x97C6E7`|`#97C6E7`
 - **Fantasy's Furniture - Venthyr**: [<span style="color:#EB8080">_**#EB8080**_</span>](https://www.colorhexa.com/EB8080) - `0xEB8080`|`#EB8080`

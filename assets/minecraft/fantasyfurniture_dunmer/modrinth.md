@@ -4,7 +4,7 @@
 
 **Dunmer** Furniture set for [**Fantasy's Furniture**](https://modrinth.com/mod/fantasy-furniture), adds fully functional furniture including, but not limited to: **Chests**, **Drawers**, **Beds**, **Seats**, and more!
 
-The designs for this furniture set were heavily inspired from the **Dunmer** race from **The Elder Scrolls** series, most prminently from their apperance in **Morrowind** and **The Elder Scrolls: Online**.
+The designs for this furniture set were heavily inspired from the **Dunmer** race from **The Elder Scrolls** series, most prominently from their apperance in **Morrowind** and **The Elder Scrolls: Online**.
 
 <details>
 

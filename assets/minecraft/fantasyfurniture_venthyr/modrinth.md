@@ -6,6 +6,19 @@
 
 The designs for this furniture set were heavily inspired by **Venthyr** covenant from the **Shadowlands Expansion** of **World Of Warcraft**.
 
+<details>
+
+In order to craft the **Venthyr Planks**/**Venthyr Wool** you must input **#minecraft:planks**/**#minecraft:wool**.
+
+![planks-stonecutter](https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_venthyr/stonecutter_planks.png)
+![wool-stonecutter](https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_venthyr/stonecutter_wool.png)
+
+In order to craft the **Venthyr** furniture blocks you must input **#fantasyfurniture:binding_agent**, **Venthyr Planks** and **Venthyr Wool** into the **Furniture Station**
+
+![furniture-station](https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_venthyr/furniture_station.png)
+
+</details>
+
 ---
 
 [Join us on **Discord**](https://discord.apexstudios.dev/)

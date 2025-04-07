@@ -6,6 +6,21 @@
 
 This furniture set comes with two variants, **Skeleton** and **Wither**, both of which contain the same set of furniture blocks.
 
+### Recipes
+
+<details>
+
+In order to craft the **Bone Bricks** you must input **#minecraft:stone_crafting_materials**.
+
+![stonecutter](https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_bone/stonecutter_bricks.png)
+
+In order to craft the **Bone** furniture blocks you must input **#fantasyfurniture:binding_agent**, **Bone Bricks** and **Soul Sand** into the **Furniture Station**
+
+![skeleton-furniture-station](https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_bone/skeleton_furniture_station.png)
+![wither-furniture-station](https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_bone/wither_furniture_station.png)
+
+</details>
+
 ---
 
 [Join us on **Discord**](https://discord.apexstudios.dev/)

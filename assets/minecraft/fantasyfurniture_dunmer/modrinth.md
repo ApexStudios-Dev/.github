@@ -6,6 +6,19 @@
 
 The designs for this furniture set were heavily inspired from the **Dunmer** race from **The Elder Scrolls** series, most prminently from their apperance in **Morrowind** and **The Elder Scrolls: Online**.
 
+<details>
+
+In order to craft the **Dunmer Planks**/**Dunmer Wool** you must input **#minecraft:planks**/**#minecraft:wool**.
+
+![planks-stonecutter](https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_dunmer/stonecutter_planks.png)
+![wool-stonecutter](https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_dunmer/stonecutter_wool.png)
+
+In order to craft the **Dunmer** furniture blocks you must input **#fantasyfurniture:binding_agent**, **Dunmer Planks** and **Dunmer Wool** into the **Furniture Station**
+
+![furniture-station](https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_dunmer/furniture_station.png)
+
+</details>
+
 ---
 
 [Join us on **Discord**](https://discord.apexstudios.dev/)

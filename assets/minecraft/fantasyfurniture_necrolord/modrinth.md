@@ -1,4 +1,4 @@
-<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_necrolord.png" alt="mod-logo" width="545" height="118"></center>
+<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_necrolord/banner.png" alt="mod-logo" width="545" height="118"></center>
 
 <br>
 

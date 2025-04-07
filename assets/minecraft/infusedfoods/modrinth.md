@@ -1,4 +1,4 @@
-<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/infused_foods.png" alt="mod-logo" width="656" height="84"></center>
+<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/infusedfoods/banner.png" alt="mod-logo" width="656" height="84"></center>
 
 <br>
 

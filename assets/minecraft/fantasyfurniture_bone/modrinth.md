@@ -1,4 +1,4 @@
-<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_bone.png" alt="mod-logo" width="594" height="153"></center>
+<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_bone/banner.png" alt="mod-logo" width="594" height="153"></center>
 
 <br>
 

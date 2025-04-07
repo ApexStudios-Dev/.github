@@ -1,4 +1,4 @@
-<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/apexcompatibilities.png" alt="mod-logo" width="622" height="55"></center>
+<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/apexcompatibilities/banner.png" alt="mod-logo" width="622" height="55"></center>
 
 <br>
 

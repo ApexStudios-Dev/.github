@@ -1,4 +1,4 @@
-<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasydice.png" alt="mod-logo" width="666" height="82"></center>
+<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasydice/banner.png" alt="mod-logo" width="666" height="82"></center>
 
 <br>
 

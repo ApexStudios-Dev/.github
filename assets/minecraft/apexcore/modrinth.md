@@ -1,4 +1,4 @@
-<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/apexcore.png" alt="mod-logo" width="531" height="99"></center>
+<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/apexcore/banner.png" alt="mod-logo" width="531" height="99"></center>
 
 <br>
 

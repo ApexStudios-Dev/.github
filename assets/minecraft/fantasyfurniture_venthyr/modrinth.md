@@ -1,4 +1,4 @@
-<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_venthyr.png" alt="mod-logo" width="573" height="149"></center>
+<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_venthyr/banner.png" alt="mod-logo" width="573" height="149"></center>
 
 <br>
 

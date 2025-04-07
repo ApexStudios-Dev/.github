@@ -1,4 +1,4 @@
-<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/fantasyfurniture_royal.png" alt="mod-logo" width="511" height="134"></center>
+<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/fantasyfurniture_royal/banner.png" alt="mod-logo" width="511" height="134"></center>
 
 <br>
 

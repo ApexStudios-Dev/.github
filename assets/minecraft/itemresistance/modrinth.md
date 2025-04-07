@@ -1,4 +1,4 @@
-<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/new/item_resistance.png" alt="mod-logo" width="641" height="71"></center>
+<center><img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/minecraft/itemresistance/banner.png" alt="mod-logo" width="641" height="71"></center>
 
 <br>
 

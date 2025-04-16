@@ -1,0 +1,64 @@
+name: Test Production Server
+
+inputs:
+  neoforge-version:
+    required: true
+    description: NeoForge version to be installed
+  neoforge-maven:
+    required: false
+    description: Maven repository to download NeoForge installed from
+    default: 'https://maven.neoforged.net/releases'
+  java-version:
+    required: true
+    description: Java version
+  java-vendor:
+    required: true
+    description: Java distribution
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ inputs.java-version }}
+        distribution: ${{ inputs.java-vendor }}
+
+    - name: Install NeoForge
+      shell: bash
+      run: |
+        curl -O "${{ inputs.neoforge-maven }}/net/neoforged/neoforge/${{ inputs.neoforge-version }}/neoforge-${{ inputs.neoforge-version }}-installer.jar"
+        java -jar neoforge-${{ inputs.neoforge-version }}-installer.jar --install-server
+
+    - name: Prepare Environment
+      shell: bash
+      run: |
+        touch eula.txt
+        echo "eula=true" >> eula.txt
+
+    - name: Run Production Server
+      shell: bash
+      run: ./run.sh
+      env:
+        # neoforge uses this env var to shutdown server after first tick
+        # neodevs internal 'test-production-server' tasks fail if this file does not exist
+        # after server has ran, we mimic the same functionality below
+        # https://github.com/neoforged/NeoForge/blob/ea51140336afccf0495a31a6e0e795ca702d361a/src/main/java/net/neoforged/neoforge/common/util/SelfTest.java
+        NEOFORGE_DEDICATED_SERVER_SELFTEST: ${{ github.workspace }}/server_self_test.txt
+
+    - name: Cleanup Environment
+      shell: bash
+      run: rm eula.txt
+
+    - name: Upload Environment
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: production-server-environment
+        path: ./
+
+    # kill the workflow if self test file was not generated
+    # this could mean server ran into some error/hard crashed before neos self test could shut it down
+    - name: Validate Self Test
+      shell: bash
+      run: if [ ! -f "./server_self_test.txt" ]; then exit 1; fi

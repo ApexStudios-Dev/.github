@@ -1,0 +1,46 @@
+name: Check local changes
+
+on:
+  workflow_call:
+    inputs:
+      java-version:
+        type: string
+        required: true
+      java-vendor:
+        type: string
+        required: true
+      mod-version:
+        type: string
+        required: true
+
+jobs:
+  check-local-changes:
+    name: Check local changes
+    runs-on: apexstudios
+    steps:
+      - name: Checkout repository
+        uses: ApexStudios-Dev/.github/actions/checkout@better-workflow # TODO: Change to master before merging
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ inputs.java-version }}
+          distribution: ${{ inputs.java-vendor }}
+
+      - name: Setup Gradle
+        uses: ApexStudios-Dev/.github/actions/setup-gradle@better-workflow # TODO: Change to master before merging
+
+      - name: Generate data with Gradle
+        run: ./gradlew :runData
+        env:
+          VERSION: ${{ inputs.mod-version }}
+
+      # This is needed otherwise the 'git status' below reports as 'gradlew' being changed
+      # Tried running 'git update-index --chmod=+x ./gradlew' to have perms tracked but this did not work
+      - name: Unmark Gradle as Executable
+        run: chmod -x ./gradlew
+
+      - name: Check no local changes are present
+        run: |
+          git status
+          if [ -n "$(git status --porcelain)" ]; then exit 1; fi

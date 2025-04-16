@@ -1,0 +1,34 @@
+name: Generate version
+
+inputs:
+  change-path:
+    required: true
+    default: './'
+    description: Path to check for changes
+
+outputs:
+  version:
+    value: ${{ steps.version.outputs.version }}
+    description: Generated version number
+
+runs:
+  using: composite
+  steps:
+    - name: Determine version
+      uses: paulhatch/semantic-version@v5.4.0
+      id: gen_version
+      with:
+        change_path: ${{ inputs.change-path }}
+        bump_each_commit: true
+
+    - name: Output version (PR)
+      if: github.event_name == 'pull_request'
+      id: version
+      shell: bash
+      run: echo version=${{ steps.gen_version.outputs.version }} >> $GITHUB_OUTPUT
+
+    - name: Output version (Commit)
+      if: github.event_name != 'pull_request'
+      id: version
+      shell: bash
+      run: echo version=${{ steps.gen_version.outputs.version }}-beta-pr-${{ github.event.pull_request.number }} >> $GITHUB_OUTPUT

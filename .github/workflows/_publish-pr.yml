@@ -1,0 +1,42 @@
+name: Publish PR
+
+on:
+  workflow_call:
+    inputs:
+      java-version:
+        required: true
+        type: string
+      java-vendor:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+      publish-task:
+        required: false
+        type: string
+        default: ':publishReleasePublicationToApexStudios-PrivateRepository'
+
+jobs:
+  publish-pr:
+    name: Publish PR
+    runs-on: apexstudios
+    steps:
+      - name: Checkout Repository
+        uses: ApexStudios-Dev/.github/actions/checkout@better-workflow # TODO: Change to 'master'
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ inputs.java-version }}
+          distribution: ${{ inputs.java-vendor }}
+
+      - name: Setup Gradle
+        uses: ApexStudios-Dev/.github/actions/setup-gradle@better-workflow # TODO: Change to 'master'
+
+      - name: Run with Gradle
+        run: ./gradlew ${{ inputs.publish-task }}
+        env:
+          VERSION: ${{ inputs.version }}
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}

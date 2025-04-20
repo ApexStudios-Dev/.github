@@ -1,0 +1,34 @@
+name: Publish to Modrinth
+
+inputs:
+  modrinth-id:
+    description: Modrinth ID
+    required: true
+  display-name:
+    description: Display name
+    required: true
+  artifact-id:
+    description: Artifact ID
+    required: true
+  version:
+    description: Version
+    required: true
+  release-type:
+    description: Release type
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Publish to Modrinth
+      uses: Kir-Antipov/mc-publish@v3.3
+      with:
+        modrinth-id: ${{ inputs.modrinth-id }}
+        modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+        files: ${{ inputs.artifact-id }}-${{ inputs.version }}.jar
+        name: ${{ inputs.display-name }}-${{ inputs.version }}
+        version: ${{ inputs.version }}
+        version-type: release
+        changelog: ''
+        loaders: neoforge

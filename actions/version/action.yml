@@ -19,7 +19,7 @@ runs:
       id: version
       shell: bash
       run: |
-        if [ $RUN_TYPE == "pull_request" || $RUN_TYPE == "pull_request_target" ]; then
+        if [ "$RUN_TYPE" == "pull_request" || "$RUN_TYPE" == "pull_request_target" ]; then
           echo version="${{ steps.version_gen.outputs.version }}-beta-pr-${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
         else
           echo version="${{ steps.version_gen.outputs.version }}" >> $GITHUB_OUTPUT

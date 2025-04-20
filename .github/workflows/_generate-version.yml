@@ -2,6 +2,10 @@ name: Generate Version
 
 on:
   workflow_call:
+    outputs:
+      version:
+        description: Generated version
+        value: ${{ jobs.generate-version.outputs.version }}
 
 jobs:
   generate-version:

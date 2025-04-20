@@ -1,0 +1,107 @@
+name: Publish Mod
+
+on:
+  workflow_call:
+    inputs:
+      java-version:
+        required: true
+        type: string
+      java-vendor:
+        required: true
+        type: string
+      publish-task:
+        required: true
+        type: string
+      curseforge-id:
+        required: true
+        type: string
+      modrinth-id:
+        required: true
+        type: string
+      artifact-id:
+        required: true
+        type: string
+      display-name:
+        required: true
+        type: string
+      release-type:
+        required: true
+        type: string
+      logo-url:
+        required: true
+        type: string
+      color:
+        required: true
+        type: string
+
+jobs:
+  generate-vars:
+    name: Generate Vars
+    uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@better-workflow # TODO: Change to 'master'
+    secrets: inherit
+
+  publish-maven:
+    name: Publish Maven
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@better-workflow # TODO: Change to 'master'
+    needs: generate-vars
+    secrets: inherit
+    with:
+      java-version: ${{ inputs.java-version }}
+      java-vendor: ${{ inputs.java-vendor }}
+      version: ${{ needs.generate-vars.outputs.version }}
+      publish-task: ${{ inputs.publish-task }}
+
+  publish-curseforge:
+    name: Publish to CurseForge
+    runs-on: ubuntu-latest
+    needs: [ generate-vars, publish-maven ]
+    if: success()
+    steps:
+      - name: Download artifact
+        run: wget "https://maven.apexstudios.dev/release/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.generate-vars.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.generate-vars.outputs.version }}.jar"
+
+      - name: Publish to CurseForge
+        uses: ApexStudios-Dev/.github/actions/publish-curseforge@better-workflow # TODO: Change to 'master'
+        with:
+          curseforge-id: ${{ inputs.curseforge-id }}
+          display-name: ${{ inputs.display-name }}
+          artifact-id: ${{ inputs.artifact-id }}
+          version: ${{ needs.generate-vars.outputs.version }}
+          release-type: ${{ inputs.release-type }}
+
+  publish-modrinth:
+    name: Publish to Modrinth
+    runs-on: ubuntu-latest
+    needs: [ generate-vars, publish-maven ]
+    if: success()
+    steps:
+      - name: Download artifact
+        run: wget "https://maven.apexstudios.dev/release/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.generate-vars.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.generate-vars.outputs.version }}.jar"
+
+      - name: Publish to Modrinth
+        uses: ApexStudios-Dev/.github/actions/publish-modrinth@better-workflow # TODO: Change to 'master'
+        with:
+          modrinth-id: ${{ inputs.modrinth-id }}
+          display-name: ${{ inputs.display-name }}
+          artifact-id: ${{ inputs.artifact-id }}
+          version: ${{ needs.generate-vars.outputs.version }}
+          release-type: ${{ inputs.release-type }}
+
+  notify-discord:
+    name: Notify Discord
+    runs-on: ubuntu-latest
+    needs: [ generate-vars, publish-maven, publish-curseforge, publish-modrinth ]
+    if: success()
+    steps:
+      - name: Send Annoucement to Discord
+        uses: tsickert/discord-webhook@v6.0.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          embed-title: ${{ inputs.display-name }} updated to v${{ needs.generate-vars.outputs.version }}!
+          embed-thumbnail-url: ${{ inputs.logo-url }}
+          embed-color: ${{ inputs.color }}
+          embed-timestamp: ${{ needs.generate-vars.outputs.timestamp }}
+          avatar-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png'
+          username: ApexStudios
+          embed-footer-text: ApexStudios
+          embed-footer-icon-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png'

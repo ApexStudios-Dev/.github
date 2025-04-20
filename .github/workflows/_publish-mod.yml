@@ -37,12 +37,12 @@ on:
 jobs:
   generate-vars:
     name: Generate Vars
-    uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@better-workflow # TODO: Change to 'master'
+    uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@master
     secrets: inherit
 
   publish-maven:
     name: Publish Maven
-    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@better-workflow # TODO: Change to 'master'
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
     needs: generate-vars
     secrets: inherit
     with:
@@ -61,7 +61,7 @@ jobs:
         run: wget "https://maven.apexstudios.dev/release/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.generate-vars.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.generate-vars.outputs.version }}.jar"
 
       - name: Publish to CurseForge
-        uses: ApexStudios-Dev/.github/actions/publish-curseforge@better-workflow # TODO: Change to 'master'
+        uses: ApexStudios-Dev/.github/actions/publish-curseforge@master
         with:
           curseforge-id: ${{ inputs.curseforge-id }}
           display-name: ${{ inputs.display-name }}
@@ -79,7 +79,7 @@ jobs:
         run: wget "https://maven.apexstudios.dev/release/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.generate-vars.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.generate-vars.outputs.version }}.jar"
 
       - name: Publish to Modrinth
-        uses: ApexStudios-Dev/.github/actions/publish-modrinth@better-workflow # TODO: Change to 'master'
+        uses: ApexStudios-Dev/.github/actions/publish-modrinth@master
         with:
           modrinth-id: ${{ inputs.modrinth-id }}
           display-name: ${{ inputs.display-name }}

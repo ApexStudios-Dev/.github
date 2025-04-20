@@ -22,7 +22,7 @@ jobs:
     runs-on: apexstudios
     steps:
       - name: Checkout Repository
-        uses: ApexStudios-Dev/.github/actions/checkout@better-workflow # TODO: Change to 'master'
+        uses: ApexStudios-Dev/.github/actions/checkout@master
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -31,7 +31,7 @@ jobs:
           distribution: ${{ inputs.java-vendor }}
 
       - name: Setup Gradle
-        uses: ApexStudios-Dev/.github/actions/setup-gradle@better-workflow # TODO: Change to 'master'
+        uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
       - name: Run with Gradle
         run: ./gradlew ${{ inputs.publish-task }}

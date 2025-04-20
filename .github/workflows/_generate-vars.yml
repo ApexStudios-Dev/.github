@@ -19,11 +19,11 @@ jobs:
       timestamp: ${{ steps.timestamp.outputs.output }}
     steps:
       - name: Checkout Repository
-        uses: ApexStudios-Dev/.github/actions/checkout@better-workflow # TODO: Change to 'master'
+        uses: ApexStudios-Dev/.github/actions/checkout@master
 
       - name: Generate version
         id: version
-        uses: ApexStudios-Dev/.github/actions/version@better-workflow # TODO: Change to 'master'
+        uses: ApexStudios-Dev/.github/actions/version@master
 
       - name: Generate Timestamp
         id: timestamp

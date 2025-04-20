@@ -1,4 +1,4 @@
-name: Publish PR
+name: Publish Maven
 
 on:
   workflow_call:
@@ -13,13 +13,12 @@ on:
         required: true
         type: string
       publish-task:
-        required: false
+        required: true
         type: string
-        default: ':publishReleasePublicationToApexStudios-PrivateRepository'
 
 jobs:
-  publish-pr:
-    name: Publish PR
+  publish-maven:
+    name: Publish Maven
     runs-on: apexstudios
     steps:
       - name: Checkout Repository

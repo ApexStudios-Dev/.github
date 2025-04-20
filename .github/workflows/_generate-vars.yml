@@ -1,4 +1,4 @@
-name: Generate Version
+name: Generate Vars
 
 on:
   workflow_call:
@@ -6,13 +6,17 @@ on:
       version:
         description: Generated version
         value: ${{ jobs.generate-version.outputs.version }}
+      timestamp:
+        description: Generated timestamp
+        value: ${{ jobs.generate-version.outputs.timestamp }}
 
 jobs:
-  generate-version:
+  generate-vars:
     name: Generate Version
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
+      timestamp: ${{ steps.timestamp.outputs.output }}
     steps:
       - name: Checkout Repository
         uses: ApexStudios-Dev/.github/actions/checkout@better-workflow # TODO: Change to 'master'
@@ -20,3 +24,7 @@ jobs:
       - name: Generate version
         id: version
         uses: ApexStudios-Dev/.github/actions/version@better-workflow # TODO: Change to 'master'
+
+      - name: Generate Timestamp
+        id: timestamp
+        run: echo "output=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT

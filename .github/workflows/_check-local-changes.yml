@@ -21,7 +21,6 @@ jobs:
   check-local-changes:
     name: Check local changes
     runs-on: apexstudios
-    if: success()
     steps:
       - name: Checkout Repository
         uses: ApexStudios-Dev/.github/actions/checkout@better-workflow # TODO: Change to 'master'

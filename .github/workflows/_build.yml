@@ -1,4 +1,4 @@
-name: Build PR
+name: Build
 
 on:
   workflow_call:
@@ -14,10 +14,9 @@ on:
         type: string
 
 jobs:
-  build-pr:
-    name: Build PR
+  build:
+    name: Build
     runs-on: apexstudios
-    if: success()
     steps:
       - name: Checkout Repository
         uses: ApexStudios-Dev/.github/actions/checkout@better-workflow # TODO: Change to 'master'
@@ -31,7 +30,7 @@ jobs:
       - name: Setup Gradle
         uses: ApexStudios-Dev/.github/actions/setup-gradle@better-workflow # TODO: Change to 'master'
 
-      - name: Run with Gradle
+      - name: Build with Gradle
         run: ./gradlew :build
         env:
           VERSION: ${{ inputs.version }}

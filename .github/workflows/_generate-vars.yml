@@ -5,14 +5,14 @@ on:
     outputs:
       version:
         description: Generated version
-        value: ${{ jobs.generate-version.outputs.version }}
+        value: ${{ jobs.generate-vars.outputs.version }}
       timestamp:
         description: Generated timestamp
-        value: ${{ jobs.generate-version.outputs.timestamp }}
+        value: ${{ jobs.generate-vars.outputs.timestamp }}
 
 jobs:
   generate-vars:
-    name: Generate Version
+    name: Generate Vars
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
@@ -27,4 +27,4 @@ jobs:
 
       - name: Generate Timestamp
         id: timestamp
-        run: echo "output=$(date --iso-8601=seconds)" >> $GITHUB_OUTPUT
+        run: echo "output=$(date --iso-8601=seconds)" >> "$GITHUB_OUTPUT"

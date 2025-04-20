@@ -4,6 +4,9 @@ inputs:
   modrinth-id:
     description: Modrinth ID
     required: true
+  modrinth-token:
+    description: Modrinth Token
+    required: true
   display-name:
     description: Display name
     required: true
@@ -24,7 +27,7 @@ runs:
       uses: Kir-Antipov/mc-publish@v3.3
       with:
         modrinth-id: ${{ inputs.modrinth-id }}
-        modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+        modrinth-token: ${{ inputs.modrinth-token }}
 
         files: ${{ inputs.artifact-id }}-${{ inputs.version }}.jar
         name: ${{ inputs.display-name }}-${{ inputs.version }}

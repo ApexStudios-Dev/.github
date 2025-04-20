@@ -4,6 +4,9 @@ inputs:
   curseforge-id:
     description: CurseForge ID
     required: true
+  curseforge-token:
+    description: CurseForge Token
+    required: true
   display-name:
     description: Display name
     required: true
@@ -24,7 +27,7 @@ runs:
       uses: Kir-Antipov/mc-publish@v3.3
       with:
         curseforge-id: ${{ inputs.curseforge-id }}
-        curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+        curseforge-token: ${{ inputs.curseforge-token }}
 
         files: ${{ inputs.artifact-id }}-${{ inputs.version }}.jar
         name: ${{ inputs.display-name }}-${{ inputs.version }}

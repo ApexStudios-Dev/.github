@@ -64,6 +64,7 @@ jobs:
         uses: ApexStudios-Dev/.github/actions/publish-curseforge@master
         with:
           curseforge-id: ${{ inputs.curseforge-id }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           display-name: ${{ inputs.display-name }}
           artifact-id: ${{ inputs.artifact-id }}
           version: ${{ needs.generate-vars.outputs.version }}
@@ -82,6 +83,7 @@ jobs:
         uses: ApexStudios-Dev/.github/actions/publish-modrinth@master
         with:
           modrinth-id: ${{ inputs.modrinth-id }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           display-name: ${{ inputs.display-name }}
           artifact-id: ${{ inputs.artifact-id }}
           version: ${{ needs.generate-vars.outputs.version }}

@@ -96,7 +96,7 @@ jobs:
     if: success()
     steps:
       - name: Send Announcement to Discord
-        uses: tsickert/discord-webhook@v6.0.0
+        uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
           embed-title: ${{ inputs.display-name }} updated to v${{ needs.generate-vars.outputs.version }}!

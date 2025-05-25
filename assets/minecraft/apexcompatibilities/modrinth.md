@@ -7,6 +7,10 @@
 ### **Recipe Viewers**
 ApexCompatibilities will allow you to lookup our custom recipe types for the follow mods, as well as grouping items in the ingredient list where possible.
 - [Roughly Enough Items](https://modrinth.com/mod/rei)
+- [Just Enough Items](https://modrinth.com/mod/jei)
+
+### **Generic**
+- [Jade](https://modrinth.com/mod/jade)
 
 ---
 

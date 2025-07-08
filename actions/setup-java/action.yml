@@ -75,7 +75,7 @@ runs:
             ]
           }
       run: |
-        mkdir /tmp/problem-matchers/
-        rm -f /tmp/problem-matchers/javac.json
+        rm -rf /tmp/problem-matchers/
+        mkdir -p /tmp/problem-matchers/
         echo "$MATCHER" > /tmp/problem-matchers/javac.json
         echo "::add-matcher::/tmp/problem-matchers/javac.json"

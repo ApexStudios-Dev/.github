@@ -26,10 +26,10 @@ jobs:
         uses: ApexStudios-Dev/.github/actions/checkout@master
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: ApexStudios-Dev/.github/actions/setup-java@master
         with:
           java-version: ${{ inputs.java-version }}
-          distribution: ${{ inputs.java-vendor }}
+          java-vendor: ${{ inputs.java-vendor }}
 
       - name: Setup Gradle
         uses: ApexStudios-Dev/.github/actions/setup-gradle@master

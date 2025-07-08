@@ -19,10 +19,11 @@ runs:
   using: composite
   steps:
     - name: Setup Java
-      uses: actions/setup-java@v4
+      uses: ApexStudios-Dev/.github/actions/setup-java@master
       with:
         java-version: ${{ inputs.java-version }}
-        distribution: ${{ inputs.java-vendor }}
+        java-vendor: ${{ inputs.java-vendor }}
+        problem-matcher: false
 
     - name: Install NeoForge
       shell: bash

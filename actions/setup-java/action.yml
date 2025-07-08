@@ -1,0 +1,80 @@
+name: Setup Java
+
+inputs:
+  java-version:
+    description: Java version
+    required: true
+  java-vendor:
+    description: Java vendor
+    required: true
+  problem-matcher:
+    description: Whether to enable the problem matcher
+    required: false
+    default: true
+  warning-file-path:
+    description: A regex pattern to be used to match Java file names (without the .java suffix) that should have warnings
+    type: string
+    required: false
+    default: '[^:]+'
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ inputs.java-version }}
+        distribution: ${{ inputs.java-vendor }}
+
+    - name: Setup Problem Matcher
+      shell: bash
+      if: inputs.problem-matcher == 'true'
+      env:
+        MATCHER: |
+          {
+            "problemMatcher": [
+              {
+                "owner": "javac-errors",
+                "pattern": [
+                  {
+                    "regexp": "^([^:]+\\.java):(\\d+): (error): (\\[(.+?)\\] )?(.+?)$",
+                    "file": 1,
+                    "line": 2,
+                    "severity": 3,
+                    "code": 5,
+                    "message": 6
+                  }
+                ]
+              },
+              {
+                "owner": "javac-warnings",
+                "pattern": [
+                  {
+                    "regexp": "^(${{ inputs.warning-file-path }}\\.java):(\\d+): (warning): (\\[(.+?)\\] )?(.+?)$",
+                    "file": 1,
+                    "line": 2,
+                    "severity": 3,
+                    "code": 5,
+                    "message": 6
+                  }
+                ]
+              },
+              {
+                "owner": "immaculate",
+                "pattern": [
+                  {
+                    "regexp": "^Issue formatting file (.+)$",
+                    "file": 1
+                  },
+                  {
+                    "regexp": "^(.+)$",
+                    "message": 1
+                  }
+                ]
+              }
+            ]
+          }
+      run: |
+        mkdir /tmp/problem-matchers/
+        echo "$MATCHER" > /tmp/problem-matchers/javac.json
+        echo "::add-matcher::/tmp/problem-matchers/javac.json"

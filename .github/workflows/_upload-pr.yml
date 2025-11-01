@@ -31,7 +31,6 @@ jobs:
         uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
       - name: Upload PR
-        # uses: neoforged/action-pr-publishing/upload@v1
-        uses: ApexModder/action-pr-publishing/upload@main
+        uses: neoforged/action-pr-publishing/upload@v1
         env:
           VERSION: ${{ inputs.version }}

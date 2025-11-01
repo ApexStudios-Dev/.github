@@ -39,9 +39,7 @@ jobs:
           private_key: ${{ secrets.PR_PUBLISHING_GH_APP_KEY }}
 
       - name: Publish PR
-        # TODO: Use NeoForge once all projects have publishing on the default branch
-        # uses: neoforged/action-pr-publishing@v1
-        uses: ApexModder/action-pr-publishing@main # dirty fork to allow 'pull_request' aswell as 'pull_request_target'
+        uses: neoforged/action-pr-publishing@v1
         env:
           GITHUB_TOKEN: ${{ steps.gen-repo-token.outputs.token }}
         with:

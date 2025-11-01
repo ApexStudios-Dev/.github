@@ -46,6 +46,6 @@ jobs:
         with:
           publishing-token: ${{ github.token }}
           uploader-workflow-name: ${{ inputs.uploader-workflow-name }}
-          artifacts-base-path: ${{ inputs }}
+          artifacts-base-path: ${{ inputs.artifacts-base-path }}
           self-name: apexstudios-app[bot]
           base-maven-url: https://maven.apexstudios.dev/prs

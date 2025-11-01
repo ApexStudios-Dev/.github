@@ -10,7 +10,7 @@ on:
       uploader-workflow-name:
         type: string
         required: false
-        default: 'Build PRs'
+        default: 'Upload PR'
         description: 'The name of the workflow uploading PR artifacts'
     secrets: 
       PR_PUBLISHING_GH_APP_ID:

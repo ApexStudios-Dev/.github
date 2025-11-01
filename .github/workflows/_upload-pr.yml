@@ -14,7 +14,7 @@ on:
         type: string
 
 jobs:
-  build:
+  upload-pr:
     name: Upload PR
     runs-on: apexstudios
     steps:

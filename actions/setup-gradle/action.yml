@@ -1,13 +1,19 @@
 name: Setup Gradle
 
+inputs:
+  use-gradle-cache:
+    required: false
+    type: boolean
+    default: false
+
 runs:
   using: composite
   steps:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
       with:
-        cache-disabled: ${{ !env.ACT }}
-        cache-read-only: false
+        cache-disabled: ${{ !inputs.use-gradle-cache }}
+        cache-read-only: ${{ !inputs.use-gradle-cache }}
 
     - name: Mark Gradle as Executable
       shell: bash

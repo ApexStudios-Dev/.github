@@ -28,7 +28,7 @@ permissions:
 jobs:
   publish-pr:
     name: Publish PR
-    runs-on: apexstudios
+    runs-on: ubuntu-latest
     steps:
       - name: Generate an Application repository access token
         id: gen-repo-token

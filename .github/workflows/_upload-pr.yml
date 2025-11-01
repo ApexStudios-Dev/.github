@@ -9,14 +9,33 @@ on:
       java-vendor:
         required: true
         type: string
-      version:
+      use-self-runner:
         required: true
-        type: string
+        type: boolean
+        default: true
+    outputs:
+      version:
+        description: Generated version
+        value: ${{ jobs.generate-vars.outputs.version }}
+      timestamp:
+        description: Generated timestamp
+        value: ${{ jobs.generate-vars.outputs.timestamp }}
+      runner:
+        description: Determined runner
+        value: ${{ jobs.generate-vars.outputs.runner }}
 
 jobs:
+  generate-vars:
+    name: Generate Vars
+    uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@master
+    secrets: inherit
+    with:
+      use-self-runner: ${{ inputs.use-self-runner }}
+
   upload-pr:
     name: Upload PR
-    runs-on: apexstudios
+    needs: generate-vars
+    runs-on: ${{ needs.generate-vars.outputs.runner }}
     steps:
       - name: Checkout Repository
         uses: ApexStudios-Dev/.github/actions/checkout@master
@@ -29,8 +48,10 @@ jobs:
 
       - name: Setup Gradle
         uses: ApexStudios-Dev/.github/actions/setup-gradle@master
+        with:
+          use-gradle-cache: ${{ !inputs.use-self-runner }}
 
       - name: Upload PR
         uses: neoforged/action-pr-publishing/upload@v1
         env:
-          VERSION: ${{ inputs.version }}
+          VERSION: ${{ needs.generate-vars.outputs.version }}

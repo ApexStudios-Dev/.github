@@ -33,32 +33,30 @@ on:
       color:
         required: true
         type: string
+      use-self-runner:
+        required: true
+        type: boolean
+        default: true
 
 jobs:
-  generate-vars:
-    name: Generate Vars
-    uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@master
-    secrets: inherit
-
   publish-maven:
     name: Publish Maven
     uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
-    needs: generate-vars
     secrets: inherit
     with:
       java-version: ${{ inputs.java-version }}
       java-vendor: ${{ inputs.java-vendor }}
-      version: ${{ needs.generate-vars.outputs.version }}
+      use-self-runner: ${{ inputs.use-self-runner }}
       publish-task: ${{ inputs.publish-task }}
 
   publish-curseforge:
     name: Publish to CurseForge
     runs-on: ubuntu-latest
-    needs: [ generate-vars, publish-maven ]
+    needs: publish-maven
     if: success()
     steps:
       - name: Download artifact
-        run: wget "https://maven.apexstudios.dev/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.generate-vars.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.generate-vars.outputs.version }}.jar"
+        run: wget "https://maven.apexstudios.dev/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
 
       - name: Publish to CurseForge
         uses: ApexStudios-Dev/.github/actions/publish-curseforge@master
@@ -67,17 +65,17 @@ jobs:
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           display-name: ${{ inputs.display-name }}
           artifact-id: ${{ inputs.artifact-id }}
-          version: ${{ needs.generate-vars.outputs.version }}
+          version: ${{ needs.publish-maven.outputs.version }}
           release-type: ${{ inputs.release-type }}
 
   publish-modrinth:
     name: Publish to Modrinth
     runs-on: ubuntu-latest
-    needs: [ generate-vars, publish-maven ]
+    needs: publish-maven
     if: success()
     steps:
       - name: Download artifact
-        run: wget "https://maven.apexstudios.dev/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.generate-vars.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.generate-vars.outputs.version }}.jar"
+        run: wget "https://maven.apexstudios.dev/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
 
       - name: Publish to Modrinth
         uses: ApexStudios-Dev/.github/actions/publish-modrinth@master
@@ -86,23 +84,23 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           display-name: ${{ inputs.display-name }}
           artifact-id: ${{ inputs.artifact-id }}
-          version: ${{ needs.generate-vars.outputs.version }}
+          version: ${{ needs.publish-maven.outputs.version }}
           release-type: ${{ inputs.release-type }}
 
   notify-discord:
     name: Notify Discord
     runs-on: ubuntu-latest
-    needs: [ generate-vars, publish-maven, publish-curseforge, publish-modrinth ]
+    needs: [ publish-maven, publish-curseforge, publish-modrinth ]
     if: success()
     steps:
       - name: Send Announcement to Discord
         uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          embed-title: ${{ inputs.display-name }} updated to v${{ needs.generate-vars.outputs.version }}!
+          embed-title: ${{ inputs.display-name }} updated to v${{ needs.publish-maven.outputs.version }}!
           embed-thumbnail-url: ${{ inputs.logo-url }}
           embed-color: ${{ inputs.color }}
-          embed-timestamp: ${{ needs.generate-vars.outputs.timestamp }}
+          embed-timestamp: ${{ needs.publish-maven.outputs.timestamp }}
           avatar-url: 'https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/apexstudios/Logo.png'
           username: ApexStudios
           embed-footer-text: ApexStudios

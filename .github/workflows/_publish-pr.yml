@@ -1,0 +1,51 @@
+name: Publish PRs to GitHub Packages
+
+on:
+  workflow_call: 
+    inputs: 
+      artifacts-base-path:
+        type: string
+        required: true
+        description: 'The base path (using / as folder separations) of the artifacts published by the PR. Artifacts not in this path will not be accepted'
+      uploader-workflow-name:
+        type: string
+        required: false
+        default: 'Build PRs'
+        description: 'The name of the workflow uploading PR artifacts'
+    secrets: 
+      PR_PUBLISHING_GH_APP_ID:
+        required: true
+      PR_PUBLISHING_GH_APP_KEY:
+        required: true
+
+permissions:
+  packages: write
+  actions: write
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  publish-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate an Application repository access token
+        id: gen-repo-token
+        uses: kattecon/gh-app-access-token-gen@v1
+        with:
+          repository: ${{ github.repository }}
+          app_id: ${{ secrets.PR_PUBLISHING_GH_APP_ID }}
+          private_key: ${{ secrets.PR_PUBLISHING_GH_APP_KEY }}
+
+      - name: Publish PR
+        # TODO: Use NeoForge once all projects have publishing on the default branch
+        # uses: neoforged/action-pr-publishing@v1
+        uses: ApexModder/action-pr-publishing@main # dirty fork to allow 'pull_request' aswell as 'pull_request_target'
+        env:
+          GITHUB_TOKEN: ${{ steps.gen-repo-token.outputs.token }}
+        with:
+          publishing-token: ${{ github.token }}
+          uploader-workflow-name: ${{ inputs.uploader-workflow-name }}
+          artifacts-base-path: ${{ inputs }}
+          self-name: apexstudios-app[bot]
+          base-maven-url: https://maven.apexstudios.dev/prs

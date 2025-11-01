@@ -42,10 +42,16 @@ jobs:
         id: runner
         shell: bash
         run: |
-          if [[ $USE_SELF_RUNNER ]]; then
+          if [[ "$USE_SELF_RUNNER" == "true" ]]; then
             echo runner="self-hosted" >> "$GITHUB_OUTPUT"
           else
             echo runner="ubuntu-latest" >> "$GITHUB_OUTPUT"
           fi
         env:
           USE_SELF_RUNNER: ${{ inputs.use-self-runner }}
+
+      - name: Print Outputs
+        run: |
+          echo version=${{ steps.version.outputs.version }}
+          echo timestamp=${{ steps.timestamp.outputs.output }}
+          echo runner=${{ steps.runner.outputs.runner }}

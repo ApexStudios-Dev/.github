@@ -2,7 +2,16 @@ name: Publish PRs to GitHub Packages
 
 on:
   workflow_call: 
-    inputs: 
+    inputs:
+      java-version:
+        required: true
+        type: string
+      java-vendor:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
       artifacts-base-path:
         type: string
         required: true
@@ -27,7 +36,8 @@ permissions:
 
 jobs:
   publish-pr:
-    runs-on: ubuntu-latest
+    name: Publish PR
+    runs-on: apexstudios
     steps:
       - name: Generate an Application repository access token
         id: gen-repo-token
@@ -37,12 +47,25 @@ jobs:
           app_id: ${{ secrets.PR_PUBLISHING_GH_APP_ID }}
           private_key: ${{ secrets.PR_PUBLISHING_GH_APP_KEY }}
 
+      - name: Checkout Repository
+        uses: ApexStudios-Dev/.github/actions/checkout@master
+
+      - name: Setup Java
+        uses: ApexStudios-Dev/.github/actions/setup-java@master
+        with:
+          java-version: ${{ inputs.java-version }}
+          java-vendor: ${{ inputs.java-vendor }}
+
+      - name: Setup Gradle
+        uses: ApexStudios-Dev/.github/actions/setup-gradle@master
+
       - name: Publish PR
         # TODO: Use NeoForge once all projects have publishing on the default branch
         # uses: neoforged/action-pr-publishing@v1
         uses: ApexModder/action-pr-publishing@main # dirty fork to allow 'pull_request' aswell as 'pull_request_target'
         env:
           GITHUB_TOKEN: ${{ steps.gen-repo-token.outputs.token }}
+          VERSION: ${{ inputs.version }}
         with:
           publishing-token: ${{ github.token }}
           uploader-workflow-name: ${{ inputs.uploader-workflow-name }}

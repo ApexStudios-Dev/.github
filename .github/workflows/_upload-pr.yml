@@ -1,4 +1,4 @@
-name: Build
+name: Upload PR
 
 on:
   workflow_call:
@@ -15,7 +15,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Upload PR
     runs-on: apexstudios
     steps:
       - name: Checkout Repository
@@ -30,7 +30,8 @@ jobs:
       - name: Setup Gradle
         uses: ApexStudios-Dev/.github/actions/setup-gradle@master
 
-      - name: Build with Gradle
-        run: ./gradlew :build
+      - name: Upload PR
+        # uses: neoforged/action-pr-publishing/upload@v1
+        uses: ApexModder/action-pr-publishing/upload@main
         env:
           VERSION: ${{ inputs.version }}

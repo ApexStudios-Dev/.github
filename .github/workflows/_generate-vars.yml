@@ -43,7 +43,7 @@ jobs:
         shell: bash
         run: |
           if [[ $USE_SELF_RUNNER ]]; then
-            echo runner="apexstudios" >> "$GITHUB_OUTPUT"
+            echo runner="self-hosted" >> "$GITHUB_OUTPUT"
           else
             echo runner="ubuntu-latest" >> "$GITHUB_OUTPUT"
           fi

@@ -5,7 +5,8 @@ on:
     inputs:
       artifacts-base-path:
         type: string
-        required: true
+        required: false
+        default: 'dev/apexstudios/'
         description: 'The base path (using / as folder separations) of the artifacts published by the PR. Artifacts not in this path will not be accepted'
       uploader-workflow-name:
         type: string

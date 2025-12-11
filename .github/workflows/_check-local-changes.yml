@@ -16,10 +16,7 @@ on:
       data-task:
         required: false
         type: string
-      check-formatting:
-        required: false
-        type: boolean
-        default: false
+        default: ':runData'
     outputs:
       version:
         description: Generated version
@@ -59,14 +56,7 @@ jobs:
           use-gradle-cache: ${{ !inputs.use-self-runner }}
 
       - name: Run with Gradle
-        if: ${{ inputs.data-task }}
         run: ./gradlew ${{ inputs.data-task }}
-        env:
-          VERSION: ${{ needs.generate-vars.outputs.version }}
-
-      - name: Run with Gradle
-        if: ${{ inputs.check-formatting }}
-        run: ./gradlew :applyAllFormatting
         env:
           VERSION: ${{ needs.generate-vars.outputs.version }}
 

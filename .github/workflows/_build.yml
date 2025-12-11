@@ -13,10 +13,6 @@ on:
         required: true
         type: boolean
         default: true
-      check-formatting:
-        required: false
-        type: boolean
-        default: false
     outputs:
       version:
         description: Generated version
@@ -56,12 +52,6 @@ jobs:
           use-gradle-cache: ${{ !inputs.use-self-runner }}
 
       - name: Build with Gradle
-        run: ./gradlew :assemble
-        env:
-          VERSION: ${{ needs.generate-vars.outputs.version }}
-
-      - name: Check formatting with Gradle
-        if: ${{ inputs.check-formatting }}
-        run: ./gradlew :checkFormatting
+        run: ./gradlew :build
         env:
           VERSION: ${{ needs.generate-vars.outputs.version }}

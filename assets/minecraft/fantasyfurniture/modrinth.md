@@ -21,6 +21,8 @@ Installing Fantasy's Furniture standalone will gain you nothing, so please be su
 - [**Royal**](https://modrinth.com/project/fantasys-furniture-royal)
 - [**Necrolord**](https://modrinth.com/project/fantasys-furniture-necrolord)
 
+Along side these modules comes our [**Decorations** module](https://modrinth.com/project/fantasys-furniture-decorations), unlike the above this module does not add any new furniture set. Rather it adds various additional decorational blocks
+
 ---
 
 [Join us on **Discord**](https://discord.apexstudios.dev/)
@@ -28,4 +30,3 @@ Installing Fantasy's Furniture standalone will gain you nothing, so please be su
 [<img src="https://raw.githubusercontent.com/ApexStudios-Dev/.github/refs/heads/master/assets/third_party/discord_banner.svg" alt="discord-banner" width="174" height="59">](https://discord.apexstudios.dev/)
 
 [![bisecthosting-banner](https://www.bisecthosting.com/partners/custom-banners/f4d8198a-6c2a-4d86-8d74-1977589e8ef7.webp)](https://www.bisecthosting.com/apexstudios)
-

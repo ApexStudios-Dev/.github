@@ -17,6 +17,10 @@ on:
         required: false
         type: string
         default: ':runData'
+      unmark-gradlew-exec:
+        required: false
+        type: boolean
+        default: true
     outputs:
       version:
         description: Generated version
@@ -63,6 +67,7 @@ jobs:
       # This is needed otherwise the 'git status' below reports as 'gradlew' being changed
       # Tried running 'git update-index --chmod=+x gradlew' to have perms tracked but this did not work
       - name: Unmark Gradle as Executable
+        if: ${{ inputs.unmark-gradlew-exec }}
         run: chmod -x gradlew
 
       - name: Check no local changes are present

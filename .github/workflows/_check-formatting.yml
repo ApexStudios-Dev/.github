@@ -1,0 +1,77 @@
+name: Check formatting
+
+on:
+  workflow_call:
+    inputs:
+      java-version:
+        required: true
+        type: string
+      java-vendor:
+        required: true
+        type: string
+      use-self-runner:
+        required: true
+        type: boolean
+        default: true
+      unmark-gradlew-exec:
+        required: false
+        type: boolean
+        default: true
+    outputs:
+      version:
+        description: Generated version
+        value: ${{ jobs.generate-vars.outputs.version }}
+      timestamp:
+        description: Generated timestamp
+        value: ${{ jobs.generate-vars.outputs.timestamp }}
+      runner:
+        description: Determined runner
+        value: ${{ jobs.generate-vars.outputs.runner }}
+
+jobs:
+  generate-vars:
+    name: Generate Vars
+    uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@master
+    secrets: inherit
+    with:
+      use-self-runner: ${{ inputs.use-self-runner }}
+
+  check-formatting:
+    name: Check formatting
+    needs: generate-vars
+    runs-on: ${{ needs.generate-vars.outputs.runner }}
+    steps:
+      - name: Checkout Repository
+        uses: ApexStudios-Dev/.github/actions/checkout@master
+
+      - name: Setup Java
+        uses: ApexStudios-Dev/.github/actions/setup-java@master
+        with:
+          java-version: ${{ inputs.java-version }}
+          java-vendor: ${{ inputs.java-vendor }}
+
+      - name: Setup Gradle
+        uses: ApexStudios-Dev/.github/actions/setup-gradle@master
+        with:
+          use-gradle-cache: ${{ !inputs.use-self-runner }}
+
+      - name: Check formatting
+        run: ./gradlew :checkFormatting
+        env:
+          VERSION: ${{ needs.generate-vars.outputs.version }}
+
+      - name: Apply formatting
+        run: ./gradlew :applyAllFormatting
+        env:
+          VERSION: ${{ needs.generate-vars.outputs.version }}
+
+      # This is needed otherwise the 'git status' below reports as 'gradlew' being changed
+      # Tried running 'git update-index --chmod=+x gradlew' to have perms tracked but this did not work
+      - name: Unmark Gradle as Executable
+        if: ${{ inputs.unmark-gradlew-exec }}
+        run: chmod -x gradlew
+
+      - name: Check no local changes are present
+        run: |
+          git status
+          if [ -n "$(git status --porcelain)" ]; then exit 1; fi

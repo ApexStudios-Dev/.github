@@ -48,4 +48,4 @@ jobs:
           uploader-workflow-name: ${{ inputs.uploader-workflow-name }}
           artifacts-base-path: ${{ inputs.artifacts-base-path }}
           self-name: apexstudios-app[bot]
-          base-maven-url: https://maven.apexstudios.dev/prs
+          base-maven-url: https://maven.apexmodder.com/prs

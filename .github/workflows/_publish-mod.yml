@@ -56,7 +56,7 @@ jobs:
     if: success()
     steps:
       - name: Download artifact
-        run: wget "https://maven.apexstudios.dev/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
+        run: wget "https://maven.apexmodder.com/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
 
       - name: Publish to CurseForge
         uses: ApexStudios-Dev/.github/actions/publish-curseforge@master
@@ -75,7 +75,7 @@ jobs:
     if: success()
     steps:
       - name: Download artifact
-        run: wget "https://maven.apexstudios.dev/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
+        run: wget "https://maven.apexmodder.com/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
 
       - name: Publish to Modrinth
         uses: ApexStudios-Dev/.github/actions/publish-modrinth@master

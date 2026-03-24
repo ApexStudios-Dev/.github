@@ -49,48 +49,49 @@ jobs:
       use-self-runner: ${{ inputs.use-self-runner }}
       publish-task: ${{ inputs.publish-task }}
 
-  publish-curseforge:
-    name: Publish to CurseForge
-    runs-on: ubuntu-latest
-    needs: publish-maven
-    if: success()
-    steps:
-      - name: Download artifact
-        run: wget "https://maven.apexmodder.com/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
+  # publish-curseforge:
+  #   name: Publish to CurseForge
+  #   runs-on: ubuntu-latest
+  #   needs: publish-maven
+  #   if: success()
+  #   steps:
+  #     - name: Download artifact
+  #       run: wget "https://maven.apexmodder.com/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
 
-      - name: Publish to CurseForge
-        uses: ApexStudios-Dev/.github/actions/publish-curseforge@master
-        with:
-          curseforge-id: ${{ inputs.curseforge-id }}
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          display-name: ${{ inputs.display-name }}
-          artifact-id: ${{ inputs.artifact-id }}
-          version: ${{ needs.publish-maven.outputs.version }}
-          release-type: ${{ inputs.release-type }}
+  #     - name: Publish to CurseForge
+  #       uses: ApexStudios-Dev/.github/actions/publish-curseforge@master
+  #       with:
+  #         curseforge-id: ${{ inputs.curseforge-id }}
+  #         curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+  #         display-name: ${{ inputs.display-name }}
+  #         artifact-id: ${{ inputs.artifact-id }}
+  #         version: ${{ needs.publish-maven.outputs.version }}
+  #         release-type: ${{ inputs.release-type }}
 
-  publish-modrinth:
-    name: Publish to Modrinth
-    runs-on: ubuntu-latest
-    needs: publish-maven
-    if: success()
-    steps:
-      - name: Download artifact
-        run: wget "https://maven.apexmodder.com/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
+  # publish-modrinth:
+  #   name: Publish to Modrinth
+  #   runs-on: ubuntu-latest
+  #   needs: publish-maven
+  #   if: success()
+  #   steps:
+  #     - name: Download artifact
+  #       run: wget "https://maven.apexmodder.com/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
 
-      - name: Publish to Modrinth
-        uses: ApexStudios-Dev/.github/actions/publish-modrinth@master
-        with:
-          modrinth-id: ${{ inputs.modrinth-id }}
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          display-name: ${{ inputs.display-name }}
-          artifact-id: ${{ inputs.artifact-id }}
-          version: ${{ needs.publish-maven.outputs.version }}
-          release-type: ${{ inputs.release-type }}
+  #     - name: Publish to Modrinth
+  #       uses: ApexStudios-Dev/.github/actions/publish-modrinth@master
+  #       with:
+  #         modrinth-id: ${{ inputs.modrinth-id }}
+  #         modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+  #         display-name: ${{ inputs.display-name }}
+  #         artifact-id: ${{ inputs.artifact-id }}
+  #         version: ${{ needs.publish-maven.outputs.version }}
+  #         release-type: ${{ inputs.release-type }}
 
   notify-discord:
     name: Notify Discord
     runs-on: ubuntu-latest
-    needs: [ publish-maven, publish-curseforge, publish-modrinth ]
+    # needs: [ publish-maven, publish-curseforge, publish-modrinth ]
+    needs: [ publish-maven ]
     if: success()
     steps:
       - name: Send Announcement to Discord

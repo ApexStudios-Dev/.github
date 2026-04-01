@@ -32,6 +32,6 @@ runs:
         files: ${{ inputs.artifact-id }}-${{ inputs.version }}.jar
         name: ${{ inputs.display-name }}-${{ inputs.version }}
         version: ${{ inputs.version }}
-        version-type: release
+        version-type: ${{ inputs.release-type }}
         changelog: ''
         loaders: neoforge

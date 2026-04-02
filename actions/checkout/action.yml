@@ -4,13 +4,12 @@ runs:
   using: composite
   steps:
     - name: Checkout Repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6.0.2
       with:
         fetch-depth: 0
         fetch-tags: true
 
     - name: Fetch Tags
-      if: ${{ !env.ACT }}
       shell: bash
       run: git fetch --tags
 

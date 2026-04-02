@@ -18,10 +18,6 @@ on:
       color:
         required: true
         type: string
-      use-self-runner:
-        required: true
-        type: boolean
-        default: true
 
 jobs:
   publish-maven:
@@ -31,7 +27,6 @@ jobs:
     with:
       java-version: ${{ inputs.java-version }}
       java-vendor: ${{ inputs.java-vendor }}
-      use-self-runner: ${{ inputs.use-self-runner }}
       publish-task: ${{ inputs.publish-task }}
 
   notify-discord:

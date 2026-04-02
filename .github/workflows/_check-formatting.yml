@@ -9,10 +9,6 @@ on:
       java-vendor:
         required: true
         type: string
-      use-self-runner:
-        required: true
-        type: boolean
-        default: true
       unmark-gradlew-exec:
         required: false
         type: boolean
@@ -24,22 +20,17 @@ on:
       timestamp:
         description: Generated timestamp
         value: ${{ jobs.generate-vars.outputs.timestamp }}
-      runner:
-        description: Determined runner
-        value: ${{ jobs.generate-vars.outputs.runner }}
 
 jobs:
   generate-vars:
     name: Generate Vars
     uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@workflow-refactor
     secrets: inherit
-    with:
-      use-self-runner: ${{ inputs.use-self-runner }}
 
   check-formatting:
     name: Check formatting
     needs: generate-vars
-    runs-on: ${{ needs.generate-vars.outputs.runner }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: ApexStudios-Dev/.github/actions/checkout@workflow-refactor
@@ -52,8 +43,6 @@ jobs:
 
       - name: Setup Gradle
         uses: ApexStudios-Dev/.github/actions/setup-gradle@workflow-refactor
-        with:
-          use-gradle-cache: ${{ !inputs.use-self-runner }}
 
       - name: Check formatting
         run: ./gradlew :checkFormatting

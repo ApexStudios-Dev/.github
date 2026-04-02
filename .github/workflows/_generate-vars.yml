@@ -2,11 +2,6 @@ name: Generate Vars
 
 on:
   workflow_call:
-    inputs:
-      use-self-runner:
-        required: false
-        type: boolean
-        default: true
     outputs:
       version:
         description: Generated version
@@ -14,9 +9,6 @@ on:
       timestamp:
         description: Generated timestamp
         value: ${{ jobs.generate-vars.outputs.timestamp }}
-      runner:
-        description: Determined runner
-        value: ${{ jobs.generate-vars.outputs.runner }}
 
 jobs:
   generate-vars:
@@ -25,7 +17,6 @@ jobs:
     outputs:
       version: ${{ steps.version.outputs.version }}
       timestamp: ${{ steps.timestamp.outputs.output }}
-      runner: ${{ steps.runner.outputs.runner }}
     steps:
       - name: Checkout Repository
         uses: ApexStudios-Dev/.github/actions/checkout@workflow-refactor
@@ -38,20 +29,7 @@ jobs:
         id: timestamp
         run: echo "output=$(date --iso-8601=seconds)" >> "$GITHUB_OUTPUT"
 
-      - name: Determine Runner
-        id: runner
-        shell: bash
-        run: |
-          if [[ "$USE_SELF_RUNNER" == "true" ]]; then
-            echo runner="self-hosted" >> "$GITHUB_OUTPUT"
-          else
-            echo runner="ubuntu-latest" >> "$GITHUB_OUTPUT"
-          fi
-        env:
-          USE_SELF_RUNNER: ${{ inputs.use-self-runner }}
-
       - name: Print Outputs
         run: |
           echo version=${{ steps.version.outputs.version }}
           echo timestamp=${{ steps.timestamp.outputs.output }}
-          echo runner=${{ steps.runner.outputs.runner }}

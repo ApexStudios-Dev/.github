@@ -28,11 +28,11 @@ jobs:
       runner: ${{ steps.runner.outputs.runner }}
     steps:
       - name: Checkout Repository
-        uses: ApexStudios-Dev/.github/actions/checkout@master
+        uses: ApexStudios-Dev/.github/actions/checkout@workflow-refactor
 
       - name: Generate version
         id: version
-        uses: ApexStudios-Dev/.github/actions/version@master
+        uses: ApexStudios-Dev/.github/actions/version@workflow-refactor
 
       - name: Generate Timestamp
         id: timestamp

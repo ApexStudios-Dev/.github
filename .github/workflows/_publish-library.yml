@@ -26,7 +26,7 @@ on:
 jobs:
   publish-maven:
     name: Publish Maven
-    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@workflow-refactor
     secrets: inherit
     with:
       java-version: ${{ inputs.java-version }}

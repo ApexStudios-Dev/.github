@@ -41,7 +41,7 @@ on:
 jobs:
   publish-maven:
     name: Publish Maven
-    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@master
+    uses: ApexStudios-Dev/.github/.github/workflows/_publish-maven.yml@workflow-refactor
     secrets: inherit
     with:
       java-version: ${{ inputs.java-version }}
@@ -59,7 +59,7 @@ jobs:
         run: wget "https://maven.apexmodder.com/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
 
       - name: Publish to CurseForge
-        uses: ApexStudios-Dev/.github/actions/publish-curseforge@master
+        uses: ApexStudios-Dev/.github/actions/publish-curseforge@workflow-refactor
         with:
           curseforge-id: ${{ inputs.curseforge-id }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
@@ -78,7 +78,7 @@ jobs:
         run: wget "https://maven.apexmodder.com/releases/dev/apexstudios/${{ inputs.artifact-id }}/${{ needs.publish-maven.outputs.version }}/${{ inputs.artifact-id }}-${{ needs.publish-maven.outputs.version }}.jar"
 
       - name: Publish to Modrinth
-        uses: ApexStudios-Dev/.github/actions/publish-modrinth@master
+        uses: ApexStudios-Dev/.github/actions/publish-modrinth@workflow-refactor
         with:
           modrinth-id: ${{ inputs.modrinth-id }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}

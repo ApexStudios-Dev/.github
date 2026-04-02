@@ -35,7 +35,7 @@ on:
 jobs:
   generate-vars:
     name: Generate Vars
-    uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@master
+    uses: ApexStudios-Dev/.github/.github/workflows/_generate-vars.yml@workflow-refactor
     secrets: inherit
     with:
       use-self-runner: ${{ inputs.use-self-runner }}
@@ -46,16 +46,16 @@ jobs:
     runs-on: ${{ needs.generate-vars.outputs.runner }}
     steps:
       - name: Checkout Repository
-        uses: ApexStudios-Dev/.github/actions/checkout@master
+        uses: ApexStudios-Dev/.github/actions/checkout@workflow-refactor
 
       - name: Setup Java
-        uses: ApexStudios-Dev/.github/actions/setup-java@master
+        uses: ApexStudios-Dev/.github/actions/setup-java@workflow-refactor
         with:
           java-version: ${{ inputs.java-version }}
           java-vendor: ${{ inputs.java-vendor }}
 
       - name: Setup Gradle
-        uses: ApexStudios-Dev/.github/actions/setup-gradle@master
+        uses: ApexStudios-Dev/.github/actions/setup-gradle@workflow-refactor
         with:
           use-gradle-cache: ${{ !inputs.use-self-runner }}
 

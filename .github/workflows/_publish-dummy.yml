@@ -19,6 +19,9 @@ on:
         required: true
         type: boolean
         default: true
+      build-task:
+        required: true
+        type: string
 
 jobs:
   generate-vars:
@@ -48,7 +51,7 @@ jobs:
           use-gradle-cache: ${{ !inputs.use-self-runner }}
 
       - name: Build with Gradle
-        run: ./gradlew :build
+        run: ./gradlew ${{ inputs.build-task }}
         env:
           VERSION: ${{ needs.generate-vars.outputs.version }}
 

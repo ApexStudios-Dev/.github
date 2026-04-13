@@ -61,7 +61,7 @@ jobs:
           find . -name "${{ inputs.artifact-id }}-${{ needs.generate-vars.outputs.version }}.jar" -exec cp {} staging/ \;
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v7.0.0
+        uses: actions/upload-artifact@v7.0.1
         with:
           path: staging/
           if-no-files-found: 'error'
